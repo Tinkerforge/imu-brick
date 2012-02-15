@@ -35,6 +35,7 @@
 #include <math.h>
 
 extern uint32_t imu_period[IMU_PERIOD_NUM];
+extern uint32_t imu_period_counter[IMU_PERIOD_NUM];
 
 extern int16_t imu_acc_x;
 extern int16_t imu_acc_y;
@@ -368,6 +369,7 @@ void get_calibration(uint8_t com, const GetCalibration *data) {
 
 void set_acceleration_period(uint8_t com, const SetAccelerationPeriod *data) {
 	imu_period[IMU_PERIOD_TYPE_ACC] = data->period;
+	imu_period_counter[IMU_PERIOD_TYPE_ACC] = 0;
 	logimui("set_acceleration_period: %d\n\r", imu_period[IMU_PERIOD_TYPE_ACC]);
 }
 
@@ -385,6 +387,7 @@ void get_acceleration_period(uint8_t com, const GetAccelerationPeriod *data) {
 
 void set_magnetic_field_period(uint8_t com, const SetMagneticFieldPeriod *data) {
 	imu_period[IMU_PERIOD_TYPE_MAG] = data->period;
+	imu_period_counter[IMU_PERIOD_TYPE_MAG] = 0;
 	logimui("set_magnetic_field_period: %d\n\r", imu_period[IMU_PERIOD_TYPE_MAG]);
 }
 
@@ -402,6 +405,7 @@ void get_magnetic_field_period(uint8_t com, const GetMagneticFieldPeriod *data) 
 
 void set_angular_velocity_period(uint8_t com, const SetAngularVelocityPeriod *data) {
 	imu_period[IMU_PERIOD_TYPE_ANG] = data->period;
+	imu_period_counter[IMU_PERIOD_TYPE_ANG] = 0;
 	logimui("set_angular_velocity_period: %d\n\r", imu_period[IMU_PERIOD_TYPE_ANG]);
 }
 
@@ -419,6 +423,7 @@ void get_angular_velocity_period(uint8_t com, const GetAngularVelocityPeriod *da
 
 void set_all_data_period(uint8_t com, const SetAllDataPeriod *data) {
 	imu_period[IMU_PERIOD_TYPE_ALL] = data->period;
+	imu_period_counter[IMU_PERIOD_TYPE_ALL] = 0;
 	logimui("set_all_data_period: %d\n\r", imu_period[IMU_PERIOD_TYPE_ALL]);
 }
 
@@ -436,6 +441,7 @@ void get_all_data_period(uint8_t com, const GetAllDataPeriod *data) {
 
 void set_orientation_period(uint8_t com, const SetOrientationPeriod *data) {
 	imu_period[IMU_PERIOD_TYPE_ORI] = data->period;
+	imu_period_counter[IMU_PERIOD_TYPE_ORI] = 0;
 	logimui("set_orientation_period: %d\n\r", imu_period[IMU_PERIOD_TYPE_ORI]);
 }
 
@@ -453,6 +459,7 @@ void get_orientation_period(uint8_t com, const GetOrientationPeriod *data) {
 
 void set_quaternion_period(uint8_t com, const SetQuaternionPeriod *data) {
 	imu_period[IMU_PERIOD_TYPE_QUA] = data->period;
+	imu_period_counter[IMU_PERIOD_TYPE_QUA] = 0;
 	logimui("set_quaternion_period: %d\n\r", imu_period[IMU_PERIOD_TYPE_QUA]);
 }
 
