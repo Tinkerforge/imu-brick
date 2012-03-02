@@ -121,7 +121,7 @@ void get_all_data(uint8_t com, const GetAllData *data) {
 	gadr.ang_x         = imu_gyr_x;
 	gadr.ang_y         = imu_gyr_y;
 	gadr.ang_z         = imu_gyr_z;
-	gadr.temperature   = 3500 + (imu_gyr_temperature*10 + 132000)/28;
+	gadr.temperature   = imu_gyr_temperature;
 
 	send_blocking_with_timeout(&gadr, sizeof(GetAllDataReturn), com);
 }
@@ -160,7 +160,7 @@ void get_imu_temperature(uint8_t com, const GetIMUTemperature *data) {
 	gtr.stack_id      = data->stack_id;
 	gtr.type          = data->type;
 	gtr.length        = sizeof(GetIMUTemperatureReturn);
-	gtr.temperature   = 3500 + (imu_gyr_temperature*10 + 132000)/28;
+	gtr.temperature   = imu_gyr_temperature;
 
 
 	send_blocking_with_timeout(&gtr, sizeof(GetIMUTemperatureReturn), com);
@@ -290,9 +290,21 @@ void set_calibration(uint8_t com, const SetCalibration *data) {
 		}
 
 		case IMU_CALIBRATION_TYPE_GYR_BIAS: {
-			new_cal.imu_gyr_x_bias = data->data[0];
-			new_cal.imu_gyr_y_bias = data->data[1];
-			new_cal.imu_gyr_z_bias = data->data[2];
+			int16_t t_high;
+			if(data->data[3] < data->data[7]) {
+				t_high = data->data[7];
+			} else {
+				t_high = data->data[3] + 1;
+			}
+
+			new_cal.imu_gyr_x_bias_low = data->data[0];
+			new_cal.imu_gyr_y_bias_low = data->data[1];
+			new_cal.imu_gyr_z_bias_low = data->data[2];
+			new_cal.imu_gyr_temp_low = data->data[3];
+			new_cal.imu_gyr_x_bias_high = data->data[4];
+			new_cal.imu_gyr_y_bias_high = data->data[5];
+			new_cal.imu_gyr_z_bias_high = data->data[6];
+			new_cal.imu_gyr_temp_high = t_high;
 			break;
 		}
 
@@ -302,6 +314,7 @@ void set_calibration(uint8_t com, const SetCalibration *data) {
 	}
 
 	imu_save_calibration(&new_cal);
+	update_gyr_temperature_aprox();
 }
 
 void get_calibration(uint8_t com, const GetCalibration *data) {
@@ -357,9 +370,14 @@ void get_calibration(uint8_t com, const GetCalibration *data) {
 		}
 
 		case IMU_CALIBRATION_TYPE_GYR_BIAS: {
-			gcr.data[0] = ic->imu_gyr_x_bias;
-			gcr.data[1] = ic->imu_gyr_y_bias;
-			gcr.data[2] = ic->imu_gyr_z_bias;
+			gcr.data[0] = ic->imu_gyr_x_bias_low;
+			gcr.data[1] = ic->imu_gyr_y_bias_low;
+			gcr.data[2] = ic->imu_gyr_z_bias_low;
+			gcr.data[3] = ic->imu_gyr_temp_low;
+			gcr.data[4] = ic->imu_gyr_x_bias_high;
+			gcr.data[5] = ic->imu_gyr_y_bias_high;
+			gcr.data[6] = ic->imu_gyr_z_bias_high;
+			gcr.data[7] = ic->imu_gyr_temp_high;
 			break;
 		}
 	}

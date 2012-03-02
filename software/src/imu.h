@@ -267,22 +267,14 @@ typedef struct {
 	const int16_t imu_gyr_y_gain_divider;
 	const int16_t imu_gyr_z_gain_divider;
 
-	const int16_t imu_gyr_x_bias;
-	const int16_t imu_gyr_y_bias;
-	const int16_t imu_gyr_z_bias;
-	const int16_t imu_gyr_x_temp_bias;
-	const int16_t imu_gyr_y_temp_bias;
-	const int16_t imu_gyr_z_temp_bias;
-
-	const int16_t imu_gyr_temp_ref;
-
-	const int32_t imu_gyr_x_temp_m_multiplier;
-	const int32_t imu_gyr_y_temp_m_multiplier;
-	const int32_t imu_gyr_z_temp_m_multiplier;
-	const int32_t imu_gyr_temp_m_divider;
-	const int32_t imu_gyr_x_temp_b;
-	const int32_t imu_gyr_y_temp_b;
-	const int32_t imu_gyr_z_temp_b;
+	const int16_t imu_gyr_x_bias_low;
+	const int16_t imu_gyr_y_bias_low;
+	const int16_t imu_gyr_z_bias_low;
+	const int16_t imu_gyr_temp_low;
+	const int16_t imu_gyr_x_bias_high;
+	const int16_t imu_gyr_y_bias_high;
+	const int16_t imu_gyr_z_bias_high;
+	const int16_t imu_gyr_temp_high;
 } IMUCalibration;
 
 typedef struct {
@@ -315,27 +307,20 @@ typedef struct {
 	int16_t imu_gyr_y_gain_divider;
 	int16_t imu_gyr_z_gain_divider;
 
-	int16_t imu_gyr_x_bias;
-	int16_t imu_gyr_y_bias;
-	int16_t imu_gyr_z_bias;
-	int16_t imu_gyr_x_temp_bias;
-	int16_t imu_gyr_y_temp_bias;
-	int16_t imu_gyr_z_temp_bias;
-
-	int16_t imu_gyr_temp_ref;
-
-	int32_t imu_gyr_x_temp_m_multiplier;
-	int32_t imu_gyr_y_temp_m_multiplier;
-	int32_t imu_gyr_z_temp_m_multiplier;
-	int32_t imu_gyr_temp_m_divider;
-	int32_t imu_gyr_x_temp_b;
-	int32_t imu_gyr_y_temp_b;
-	int32_t imu_gyr_z_temp_b;
+	int16_t imu_gyr_x_bias_low;
+	int16_t imu_gyr_y_bias_low;
+	int16_t imu_gyr_z_bias_low;
+	int16_t imu_gyr_temp_low;
+	int16_t imu_gyr_x_bias_high;
+	int16_t imu_gyr_y_bias_high;
+	int16_t imu_gyr_z_bias_high;
+	int16_t imu_gyr_temp_high;
 } IMUCalibrationNonConst;
 
 void tick_task(const uint8_t tick_type);
 void make_period_signal(const uint8_t type);
 
+void update_gyr_temperature_aprox(void);
 void update_sensors_async(void);
 void callback_accelerometer(Async *a);
 void callback_magnetometer(Async *a);

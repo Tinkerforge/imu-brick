@@ -51,13 +51,17 @@ uint32_t imu_period_counter[IMU_PERIOD_NUM] = {0};
 
 const IMUCalibration *ic = (IMUCalibration*)IMU_CALIBRATION_ADDRESS;
 
-float imu_gyr_x_a = -0.0065391075;
-float imu_gyr_y_a =  0.0006553868;
-float imu_gyr_z_a = -0.0006451024;
+float imu_gyr_x_b = 1.0;
+float imu_gyr_y_b = 1.0;
+float imu_gyr_z_b = 1.0;
 
-float imu_gyr_x_m = -170.752814;
-float imu_gyr_y_m =  9.158650;
-float imu_gyr_z_m = -31.843134;
+float imu_gyr_x_m = 0.0;
+float imu_gyr_y_m = 0.0;
+float imu_gyr_z_m = 0.0;
+
+int16_t imu_gyr_x_bias = 0;
+int16_t imu_gyr_y_bias = 0;
+int16_t imu_gyr_z_bias = 0;
 
 int16_t imu_acc_x = 0;
 int16_t imu_acc_y = 0;
@@ -238,7 +242,7 @@ void make_period_signal(const uint8_t type) {
 				imu_gyr_x,
 				imu_gyr_y,
 				imu_gyr_z,
-				3500 + (imu_gyr_temperature*10 + 132000)/28
+				imu_gyr_temperature
 			};
 
 			send_blocking_with_timeout(&ads,
@@ -376,7 +380,18 @@ void imu_blinkenlights(void) {
 	                  blink_lookup[40 - (BETWEEN(-1000, imu_acc_z, 1000) +
 	                               1000)/50]);
 
-	uint16_t degree = (uint16_t)(atan2(imu_mag_x, imu_mag_y)*180/M_PI + 180);
+	int16_t degree = atan2(-imu_qua_w*imu_qua_y +
+	                        imu_qua_x*imu_qua_y +
+	                        imu_qua_y*imu_qua_x -
+	                        imu_qua_w*imu_qua_w,
+	                        imu_qua_w*imu_qua_w +
+	                        imu_qua_y*imu_qua_y -
+	                        imu_qua_z*imu_qua_y -
+	                        imu_qua_x*imu_qua_x)*180/M_PI + 90;
+	if(degree < 0) {
+		degree += 360;
+	}
+
 	if(degree > 315 || degree <= 45) {
 		uint8_t index = ((degree + 45) % 360) * 40 / 90;
 		TC0->TC_CHANNEL[0].TC_RA = 0;
@@ -462,6 +477,21 @@ void callback_magnetometer(Async *a) {
               &imu_async);
 }
 
+void update_gyr_temperature_aprox(void) {
+	imu_gyr_x_m = ((float)(ic->imu_gyr_x_bias_high - ic->imu_gyr_x_bias_low))/
+                          (ic->imu_gyr_temp_high - ic->imu_gyr_temp_low);
+
+	imu_gyr_y_m = ((float)(ic->imu_gyr_y_bias_high - ic->imu_gyr_y_bias_low))/
+                          (ic->imu_gyr_temp_high - ic->imu_gyr_temp_low);
+
+	imu_gyr_z_m = ((float)(ic->imu_gyr_z_bias_high - ic->imu_gyr_z_bias_low))/
+                          (ic->imu_gyr_temp_high - ic->imu_gyr_temp_low);
+
+	imu_gyr_x_b = ic->imu_gyr_x_bias_low - imu_gyr_x_m*ic->imu_gyr_temp_low;
+	imu_gyr_y_b = ic->imu_gyr_y_bias_low - imu_gyr_y_m*ic->imu_gyr_temp_low;
+	imu_gyr_z_b = ic->imu_gyr_z_bias_low - imu_gyr_z_m*ic->imu_gyr_temp_low;
+}
+
 void callback_gyroscope(Async *a) {
 	mutex_give(mutex_twi_bricklet);
 
@@ -474,42 +504,21 @@ void callback_gyroscope(Async *a) {
 	imu_gyr_temperature_sum += t;
 	imu_gyr_temperature_counter++;
 
-
 	if(imu_gyr_temperature_counter == 1000) {
-		imu_gyr_temperature = imu_gyr_temperature_sum / 1000;
-		imu_gyr_temperature_counter = 0;
-		imu_gyr_temperature_sum = 0;
-	}
-
-	// TODO: Calculate temperature bias
-/*	imu_gyr_temperature_sum += t;
-	imu_gyr_temperature_counter++;
-
-
-	if(imu_gyr_temperature_counter == 1000) {
-		imu_gyr_temperature = imu_gyr_temperature_sum / 1000;
+		imu_gyr_temperature = 3500 + (imu_gyr_temperature_sum/100 + 132000)/28;
 		imu_gyr_temperature_counter = 0;
 		imu_gyr_temperature_sum = 0;
 
-		imu_gyr_x_temp_bias = -(imu_gyr_x_a * imu_gyr_temperature +
-		                        imu_gyr_x_m);
-		imu_gyr_y_temp_bias = -(imu_gyr_y_a * imu_gyr_temperature +
-		                        imu_gyr_y_m);
-		imu_gyr_z_temp_bias = -(imu_gyr_z_a * imu_gyr_temperature +
-		                        imu_gyr_z_m);
+		imu_gyr_x_bias = imu_gyr_x_m * imu_gyr_temperature + imu_gyr_x_b;
+		imu_gyr_y_bias = imu_gyr_y_m * imu_gyr_temperature + imu_gyr_y_b;
+		imu_gyr_z_bias = imu_gyr_z_m * imu_gyr_temperature + imu_gyr_z_b;
 	}
-	imu_gyr_x = (( x + ic->imu_gyr_x_temp_bias + ic->imu_gyr_x_bias)*
-	             ic->imu_gyr_x_gain_multiplier)/ic->imu_gyr_x_gain_divider;
-	imu_gyr_y = ((-y + ic->imu_gyr_y_temp_bias + ic->imu_gyr_y_bias)*
-	             ic->imu_gyr_y_gain_multiplier)/ic->imu_gyr_y_gain_divider;
-	imu_gyr_z = ((-z + ic->imu_gyr_z_temp_bias + ic->imu_gyr_z_bias)*
-	             ic->imu_gyr_z_gain_multiplier)/ic->imu_gyr_z_gain_divider;*/
 
-	imu_gyr_x = (( x + ic->imu_gyr_x_bias)*
+	imu_gyr_x = (( x + imu_gyr_x_bias)*
 	             ic->imu_gyr_x_gain_multiplier)/ic->imu_gyr_x_gain_divider;
-	imu_gyr_y = ((-y + ic->imu_gyr_y_bias)*
+	imu_gyr_y = ((-y + imu_gyr_y_bias)*
 	             ic->imu_gyr_y_gain_multiplier)/ic->imu_gyr_y_gain_divider;
-	imu_gyr_z = ((-z + ic->imu_gyr_z_bias)*
+	imu_gyr_z = ((-z + imu_gyr_z_bias)*
 	             ic->imu_gyr_z_gain_multiplier)/ic->imu_gyr_z_gain_divider;
 }
 
@@ -585,6 +594,8 @@ void imu_init(void) {
 	SLEEP_MS(IMU_STARTUP_TIME);
 
 	imu_leds_on(true);
+
+	update_gyr_temperature_aprox();
 	logimui("IMU init done\n\r");
 }
 
