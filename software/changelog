@@ -2,3 +2,4 @@
 1.0.1: Use quaternion instead of magnetometer for direction leds
 1.0.2: Fix bug with timeouts on windows (through bricklib)
 1.0.3: Fix bug with ADC calibration readout (through bricklib)
+1.0.4: Remove catching up of list signal messages (for chibi)
