@@ -170,6 +170,12 @@ void tick_task(const uint8_t tick_type) {
 		for(uint8_t i = 0; i < IMU_PERIOD_NUM; i++) {
 			if((imu_period[i] != 0) &&
 			   (imu_period[i] <= imu_period_counter[i])) {
+				// Test if we are totally out of time (lost a whole
+				// period), in this case we don't send the signal again.
+				// This is needed for the wireless extensions
+				if(imu_period[i]*2 <= imu_period_counter[i]) {
+					imu_period_counter[i] = imu_period[i];
+				}
 				make_period_signal(i);
 			}
 		}
@@ -252,7 +258,6 @@ void make_period_signal(const uint8_t type) {
 		}
 
 		case IMU_PERIOD_TYPE_ORI: {
-//			imu_quaternion_to_orientation();
 			OrientationSignal os = {
 				com_stack_id,
 				TYPE_ORIENTATION,
