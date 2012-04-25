@@ -11,13 +11,12 @@ public class ExampleCallback {
 	public static void main(String args[]) throws Exception {
 		// Create connection to brickd
 		IPConnection ipcon = new IPConnection(host, port); // Can throw IOException
-
 		BrickIMU imu = new BrickIMU(UID); // Create device object
 
-		// Add device to ip connection
+		// Add device to IP connection
 		ipcon.addDevice(imu); // Can throw IPConnection.TimeoutException
 		// Don't use device before it is added to a connection
-		
+
 		// Set period for quaternion callback to 1s
 		imu.setQuaternionPeriod(1000);
 

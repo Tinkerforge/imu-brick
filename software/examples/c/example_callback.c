@@ -13,7 +13,7 @@ void cb_quaternion(float x, float y, float z, float w) {
 }
 
 int main() {
-	// Create ip connection to brickd
+	// Create IP connection to brickd
 	IPConnection ipcon;
 	if(ipcon_create(&ipcon, HOST, PORT) < 0) {
 		fprintf(stderr, "Could not create connection\n");
@@ -24,13 +24,12 @@ int main() {
 	IMU imu;
 	imu_create(&imu, UID); 
 
-	// Add device to ip connection
+	// Add device to IP connection
 	if(ipcon_add_device(&ipcon, &imu) < 0) {
 		fprintf(stderr, "Could not connect to Brick\n");
 		exit(1);
 	}
 	// Don't use device before it is added to a connection
-
 
 	// Set period for quaternion callback to 1s
 	imu_set_quaternion_period(&imu, 1000);
@@ -41,5 +40,5 @@ int main() {
 	                      cb_quaternion);
 
 	printf("Press ctrl+c to close\n");
-	ipcon_join_thread(&ipcon); // Join mainloop of ip connection
+	ipcon_join_thread(&ipcon); // Join mainloop of IP connection
 }
