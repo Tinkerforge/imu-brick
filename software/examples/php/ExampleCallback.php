@@ -10,7 +10,7 @@ $host = 'localhost';
 $port = 4223;
 $uid = 'a4JriVLwq7E'; // Change to your UID
 
-// Use position reached callback to swing back and forth
+// Quaternion callback
 function cb_quaternion($x, $y, $z, $w)
 {
     echo "x: $x\ny: $y\nz: $z\nw: $w\n";

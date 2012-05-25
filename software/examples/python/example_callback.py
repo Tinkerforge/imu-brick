@@ -10,7 +10,7 @@ from tinkerforge.brick_imu import IMU
 
 imu = IMU(UID) # Create device object
 
-# Use position reached callback to swing back and forth
+# Quaternion callback
 def quaternion_cb(x, y, z, w):
     print("x: " + str(x) + "\ny: " + str(y) + "\nz: " + str(z) + "\nw: " + str(w) + "\n")
 
