@@ -10,13 +10,13 @@ from tinkerforge.brick_imu import IMU
 
 imu = IMU(UID) # Create device object
 
-# Use position reached callback to swing back and forth
+# Quaternion callback
 def quaternion_cb(x, y, z, w):
     print("x: " + str(x) + "\ny: " + str(y) + "\nz: " + str(z) + "\nw: " + str(w) + "\n")
 
 if __name__ == "__main__":
-    ipcon = IPConnection(HOST, PORT) # Create ip connection to brickd
-    ipcon.add_device(imu) # Add device to ip connection
+    ipcon = IPConnection(HOST, PORT) # Create IPconnection to brickd
+    ipcon.add_device(imu) # Add device to IP connection
     # Don't use device before it is added to a connection
 
     # Set period for quaternion callback to 1s
