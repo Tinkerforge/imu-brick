@@ -3,3 +3,4 @@
 1.0.2: Fix bug with timeouts on windows (through bricklib)
 1.0.3: Fix bug with ADC calibration readout (through bricklib)
 1.0.4: Remove catching up of list signal messages (for chibi)
+1.0.5: Fix wrong defines (see issue #1 on github)
