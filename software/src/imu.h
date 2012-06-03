@@ -194,12 +194,12 @@
 // ITG DLPF FS Register values
 #define ITG_DLPF_FS_FS_SEL                (3 << 3)
 #define ITG_DLPF_FS_DLPF_CFG_256_8        (0 << 0)
-#define ITG_DLPF_FS_DLPF_CFG_188_1        (0 << 1)
-#define ITG_DLPF_FS_DLPF_CFG_098_1        (0 << 2)
-#define ITG_DLPF_FS_DLPF_CFG_042_1        (0 << 3)
-#define ITG_DLPF_FS_DLPF_CFG_020_1        (0 << 4)
-#define ITG_DLPF_FS_DLPF_CFG_010_1        (0 << 5)
-#define ITG_DLPF_FS_DLPF_CFG_005_1        (0 << 6)
+#define ITG_DLPF_FS_DLPF_CFG_188_1        (1 << 0)
+#define ITG_DLPF_FS_DLPF_CFG_098_1        (2 << 0)
+#define ITG_DLPF_FS_DLPF_CFG_042_1        (3 << 0)
+#define ITG_DLPF_FS_DLPF_CFG_020_1        (4 << 0)
+#define ITG_DLPF_FS_DLPF_CFG_010_1        (5 << 0)
+#define ITG_DLPF_FS_DLPF_CFG_005_1        (6 << 0)
 
 // ITG INT CFG Register values
 #define ITG_INT_CFG_RAW_RDY_EN            (1 << 0)
@@ -217,11 +217,11 @@
 
 // ITG PWER MGN Register values
 #define ITG_PWR_MGM_CLK_SEL_INTERNAL      (0 << 0)
-#define ITG_PWR_MGM_CLK_SEL_GYRO_X        (0 << 1)
-#define ITG_PWR_MGM_CLK_SEL_GYRO_Y        (0 << 2)
-#define ITG_PWR_MGM_CLK_SEL_GYRO_Z        (0 << 3)
-#define ITG_PWR_MGM_CLK_SEL_EXT_32_KHZ    (0 << 4)
-#define ITG_PWR_MGM_CLK_SEL_EXT_19_MHZ    (0 << 5)
+#define ITG_PWR_MGM_CLK_SEL_GYRO_X        (1 << 0)
+#define ITG_PWR_MGM_CLK_SEL_GYRO_Y        (2 << 0)
+#define ITG_PWR_MGM_CLK_SEL_GYRO_Z        (3 << 0)
+#define ITG_PWR_MGM_CLK_SEL_EXT_32_KHZ    (4 << 0)
+#define ITG_PWR_MGM_CLK_SEL_EXT_19_MHZ    (5 << 0)
 #define ITG_PWR_MGM_STBY_ZG               (1 << 3)
 #define ITG_PWR_MGM_STBY_YG               (1 << 4)
 #define ITG_PWR_MGM_STBY_XG               (1 << 5)
