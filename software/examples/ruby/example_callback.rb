@@ -19,7 +19,7 @@ ipcon.add_device imu # Add device to IP connection
 imu.set_quaternion_period 1000
 
 # Register quaternion callback
-imu.register_callback BrickIMU::CALLBACK_QUATERNION, do |x, y, z, w|
+imu.register_callback(BrickIMU::CALLBACK_QUATERNION) do |x, y, z, w|
   puts "x: #{x}"
   puts "y: #{y}"
   puts "z: #{z}"
