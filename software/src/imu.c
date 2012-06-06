@@ -385,14 +385,8 @@ void imu_blinkenlights(void) {
 	                  blink_lookup[40 - (BETWEEN(-1000, imu_acc_z, 1000) +
 	                               1000)/50]);
 
-	int16_t degree = atan2(-imu_qua_w*imu_qua_y +
-	                        imu_qua_x*imu_qua_y +
-	                        imu_qua_y*imu_qua_x -
-	                        imu_qua_w*imu_qua_w,
-	                        imu_qua_w*imu_qua_w +
-	                        imu_qua_y*imu_qua_y -
-	                        imu_qua_z*imu_qua_y -
-	                        imu_qua_x*imu_qua_x)*180/M_PI + 90;
+	int16_t degree = atan2(2.0*(imu_qua_x*imu_qua_y + imu_qua_w*imu_qua_z),
+	                       1.0 - 2.0*(imu_qua_x*imu_qua_x + imu_qua_z*imu_qua_z))*180/M_PI + 45;
 	if(degree < 0) {
 		degree += 360;
 	}
