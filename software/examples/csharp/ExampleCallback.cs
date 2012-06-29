@@ -27,7 +27,8 @@ class Example
 		// Register quaternion callback to QuaternionCB
 		imu.RegisterCallback(new BrickIMU.Quaternion(QuaternionCB));
 
-		System.Console.WriteLine("Press ctrl+c to exit");
-		ipcon.JoinThread();
+		System.Console.WriteLine("Press key to exit");
+		System.Console.ReadKey();
+		ipcon.Destroy();
 	}
 }
