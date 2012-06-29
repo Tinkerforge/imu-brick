@@ -5,3 +5,4 @@
 1.0.4: Remove catching up of list signal messages (for chibi)
 1.0.5: Fix wrong defines (see issue #1 on github)
 1.0.6: Use better compass approximation
+1.0.7: Add get_temperature and reset function
