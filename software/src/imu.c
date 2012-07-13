@@ -110,7 +110,7 @@ float imu_filter_beta = SQRT3DIV4 * M_PI * \
 float imu_filter_zeta = SQRT3DIV4 * M_PI * \
                         ((IMU_DEFAULT_CONVERGENCE_SPEED/60.0f) / 180.0f);
 
-bool imu_use_leds = true;
+bool imu_use_leds = false;
 uint32_t imu_tick = 0;
 Async imu_async;
 uint8_t imu_sensor_data[8] = {0};
@@ -591,8 +591,9 @@ void imu_init(void) {
 	                 ITG_PWR_MGM_CLK_SEL_GYRO_X);
 
 	SLEEP_MS(IMU_STARTUP_TIME);
-
+#ifndef PROFILING
 	imu_leds_on(true);
+#endif
 
 	update_gyr_temperature_aprox();
 	logimui("IMU init done\n\r");
