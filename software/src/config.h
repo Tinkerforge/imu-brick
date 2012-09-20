@@ -32,7 +32,7 @@
 #define BRICK_HARDWARE_NAME "IMU Brick 1.0"
 #define BRICK_FIRMWARE_VERSION_MAJOR 1
 #define BRICK_FIRMWARE_VERSION_MINOR 0
-#define BRICK_FIRMWARE_VERSION_REVISION 8
+#define BRICK_FIRMWARE_VERSION_REVISION 9
 
 // ************** DEBUG SETTINGS **************
 #define DEBUG_SPI_STACK 1
@@ -227,3 +227,11 @@
                          PIN_LSM_INT2, PIN_LSM_MAG_RDY
 
 #define TWI_IMU          TWI0
+
+
+// *************** Stack interrupt pins *********
+#define PIN_STACK_INT0   {1 << 3, PIOB, ID_PIOB, PIO_INPUT, PIO_DEFAULT}
+#define PIN_STACK_INT1   {1 << 8, PIOA, ID_PIOA, PIO_INPUT, PIO_DEFAULT}
+#define PIN_STACK_INT2   {1 << 18, PIOA, ID_PIOA, PIO_INPUT, PIO_DEFAULT}
+
+#define PINS_STACK       PIN_STACK_INT0, PIN_STACK_INT1, PIN_STACK_INT2

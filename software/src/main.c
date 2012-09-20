@@ -53,6 +53,9 @@ void vApplicationStackOverflowHook(xTaskHandle *pxTask, signed char *pcTaskName)
 }
 
 int main() {
+	const Pin pins_stack[] = {PINS_STACK};
+	PIO_Configure(pins_stack, PIO_LISTSIZE(pins_stack));
+
 	brick_init();
 
 #ifdef PROFILING
