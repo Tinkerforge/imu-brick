@@ -52,6 +52,8 @@ void vApplicationStackOverflowHook(xTaskHandle *pxTask, signed char *pcTaskName)
 	while(true);
 }
 
+char brick_hardware_name[] = BRICK_HARDWARE_NAME;
+
 int main() {
 	const Pin pins_stack[] = {PINS_STACK};
 	PIO_Configure(pins_stack, PIO_LISTSIZE(pins_stack));
