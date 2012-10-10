@@ -27,8 +27,6 @@
 
 #include "imu.h"
 
-#define at91sam3s4b
-
 #define BRICK_HARDWARE_NAME "IMU Brick 1.0"
 #define BRICK_FIRMWARE_VERSION_MAJOR 1
 #define BRICK_FIRMWARE_VERSION_MINOR 0
