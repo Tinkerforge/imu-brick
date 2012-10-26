@@ -8,3 +8,4 @@
 1.0.7: Add get_chip_temperature and reset function
 1.0.8: Add USB hotplug support (through bricklib)
 1.0.9: Set Interrupt pins to input default (otherwise they can interfere with WIFI)	
+1.0.10: Change Bricklet Context size from 250 to 256 (through bricklib)
