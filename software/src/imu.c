@@ -27,7 +27,6 @@
 #include "bricklib/com/com_common.h"
 #include "bricklib/logging/logging.h"
 
-
 #include "bricklib/drivers/pio/pio.h"
 #include "bricklib/drivers/twi/twi.h"
 #include "bricklib/drivers/twi/twid.h"
@@ -35,6 +34,7 @@
 #include "bricklib/drivers/pwmc/pwmc.h"
 #include "bricklib/drivers/tc/tc.h"
 #include "bricklib/drivers/adc/adc.h"
+#include "bricklib/drivers/usb/USBD_HAL.h"
 #include "bricklib/utility/util_definitions.h"
 #include "bricklib/utility/init.h"
 #include "bricklib/utility/led.h"
@@ -117,8 +117,8 @@ uint8_t imu_sensor_data[8] = {0};
 
 extern Twid twid;
 extern ComType com_current;
-extern uint8_t com_stack_id;
 extern Mutex mutex_twi_bricklet;
+extern uint32_t com_brick_uid;
 
 uint16_t imu_convergence_speed = 30;
 
@@ -137,6 +137,8 @@ bool pins_led_is_pwm[] = {true,
                           true};
 
 void tick_task(const uint8_t tick_type) {
+	static int8_t message_counter = 0;
+
 	if(tick_type == TICK_TASK_TYPE_CALCULATION) {
 		switch(imu_tick % 2) {
 			case 0:
@@ -167,6 +169,17 @@ void tick_task(const uint8_t tick_type) {
 		}
 		imu_tick++;
 	} else if(tick_type == TICK_TASK_TYPE_MESSAGE) {
+		if(message_counter != -1 && !usbd_hal_is_disabled(IN_EP)) {
+			message_counter++;
+			if(message_counter >= 100) {
+				message_counter = 0;
+				if(brick_init_enumeration(COM_USB)) {
+					com_current = COM_USB;
+					message_counter = -1;
+				}
+			}
+		}
+
 		for(uint8_t i = 0; i < IMU_PERIOD_NUM; i++) {
 			if((imu_period[i] != 0) &&
 			   (imu_period[i] <= imu_period_counter[i])) {
@@ -187,14 +200,11 @@ void make_period_signal(const uint8_t type) {
 
 	switch(type) {
 		case IMU_PERIOD_TYPE_ACC: {
-			AccelerationSignal as = {
-				com_stack_id,
-				TYPE_ACCELERATION,
-				sizeof(AccelerationSignal),
-				imu_acc_x,
-				imu_acc_y,
-				imu_acc_z
-			};
+			AccelerationSignal as;
+			com_make_default_header(&as, com_brick_uid, sizeof(AccelerationSignal), FID_ACCELERATION);
+			as.x = imu_acc_x;
+			as.y = imu_acc_y;
+			as.z = imu_acc_z;
 
 			send_blocking_with_timeout(&as,
 			                           sizeof(AccelerationSignal),
@@ -203,14 +213,11 @@ void make_period_signal(const uint8_t type) {
 		}
 
 		case IMU_PERIOD_TYPE_MAG: {
-			MagneticFieldSignal mfs = {
-				com_stack_id,
-				TYPE_MAGNETIC_FIELD,
-				sizeof(MagneticFieldSignal),
-				imu_mag_x,
-				imu_mag_y,
-				imu_mag_z
-			};
+			MagneticFieldSignal mfs;
+			com_make_default_header(&mfs, com_brick_uid, sizeof(MagneticFieldSignal), FID_MAGNETIC_FIELD);
+			mfs.x = imu_mag_x;
+			mfs.y = imu_mag_y;
+			mfs.z = imu_mag_z;
 
 			send_blocking_with_timeout(&mfs,
 			                           sizeof(MagneticFieldSignal),
@@ -219,14 +226,11 @@ void make_period_signal(const uint8_t type) {
 		}
 
 		case IMU_PERIOD_TYPE_ANG: {
-			AngularVelocitySignal avs = {
-				com_stack_id,
-				TYPE_ANGULAR_VELOCITY,
-				sizeof(AngularVelocitySignal),
-				imu_gyr_x,
-				imu_gyr_y,
-				imu_gyr_z,
-			};
+			AngularVelocitySignal avs;
+			com_make_default_header(&avs, com_brick_uid, sizeof(AngularVelocitySignal), FID_ANGULAR_VELOCITY);
+			avs.x = imu_gyr_x;
+			avs.y = imu_gyr_y;
+			avs.z = imu_gyr_z;
 
 			send_blocking_with_timeout(&avs,
 			                           sizeof(AngularVelocitySignal),
@@ -235,21 +239,18 @@ void make_period_signal(const uint8_t type) {
 		}
 
 		case IMU_PERIOD_TYPE_ALL: {
-			AllDataSignal ads = {
-				com_stack_id,
-				TYPE_ALL_DATA,
-				sizeof(AllDataSignal),
-				imu_acc_x,
-				imu_acc_y,
-				imu_acc_z,
-				imu_mag_x,
-				imu_mag_y,
-				imu_mag_z,
-				imu_gyr_x,
-				imu_gyr_y,
-				imu_gyr_z,
-				imu_gyr_temperature
-			};
+			AllDataSignal ads;
+			com_make_default_header(&ads, com_brick_uid, sizeof(AllDataSignal), FID_ALL_DATA);
+			ads.acc_x       = imu_acc_x;
+			ads.acc_y       = imu_acc_y;
+			ads.acc_z       = imu_acc_z;
+			ads.mag_x       = imu_mag_x;
+			ads.mag_y       = imu_mag_y;
+			ads.mag_z       = imu_mag_z;
+			ads.ang_x       = imu_gyr_x;
+			ads.ang_y       = imu_gyr_y;
+			ads.ang_z       = imu_gyr_z;
+			ads.temperature = imu_gyr_temperature;
 
 			send_blocking_with_timeout(&ads,
 			                           sizeof(AllDataSignal),
@@ -258,14 +259,11 @@ void make_period_signal(const uint8_t type) {
 		}
 
 		case IMU_PERIOD_TYPE_ORI: {
-			OrientationSignal os = {
-				com_stack_id,
-				TYPE_ORIENTATION,
-				sizeof(OrientationSignal),
-				imu_roll,
-				imu_pitch,
-				imu_yaw
-			};
+			OrientationSignal os;
+			com_make_default_header(&os, com_brick_uid, sizeof(OrientationSignal), FID_ORIENTATION);
+			os.roll  = imu_roll;
+			os.pitch = imu_pitch;
+			os.yaw   = imu_yaw;
 
 			send_blocking_with_timeout(&os,
 			                           sizeof(OrientationSignal),
@@ -274,15 +272,12 @@ void make_period_signal(const uint8_t type) {
 		}
 
 		case IMU_PERIOD_TYPE_QUA: {
-			QuaternionSignal qs = {
-				com_stack_id,
-				TYPE_QUATERNION,
-				sizeof(QuaternionSignal),
-				imu_qua_x,
-				imu_qua_y,
-				imu_qua_z,
-				imu_qua_w
-			};
+			QuaternionSignal qs;
+			com_make_default_header(&qs, com_brick_uid, sizeof(QuaternionSignal), FID_QUATERNION);
+			qs.x = imu_qua_x;
+			qs.y = imu_qua_y;
+			qs.z = imu_qua_z;
+			qs.w = imu_qua_w;
 
 			send_blocking_with_timeout(&qs,
 			                           sizeof(QuaternionSignal),
@@ -304,7 +299,7 @@ print s + "}"
 */
 const uint16_t blink_lookup[41] = {1, 1, 33, 99, 263, 492, 885, 1377, 2098, 2982, 4096, 5440, 7078, 8979, 11240, 13795, 16777, 20119, 23888, 28082, 32767, 37452, 41646, 45415, 48757, 51739, 54294, 56555, 58456, 60094, 61438, 62552, 63436, 64157, 64649, 65042, 65271, 65435, 65501, 65534, 65534};
 
-void imu_leds_on(bool on) {
+void imu_leds_on(const bool on) {
 	if(on) {
 		PMC->PMC_PCER0 = 1 << ID_PWM;
 		for(uint8_t i = 0; i < 4; i++) {
@@ -533,7 +528,7 @@ void update_sensors_async(void) {
               &imu_async);
 }
 
-void imu_set_register(uint16_t addr, uint16_t reg, uint8_t value) {
+void imu_set_register(const uint16_t addr, const uint16_t reg, uint8_t const value) {
 	TWI_IMU->TWI_MMR = 0;
 	TWI_IMU->TWI_MMR = (addr << 16);
     while(!TWI_ByteSent(TWI_IMU));
@@ -624,12 +619,14 @@ void imu_fill_calibration(IMUCalibrationNonConst *icnc) {
 }
 
 float imu_inv_sqrt(const float x) {
-	float halfx = 0.5f * x;
-	float y = x;
-	long i = *(long*)&y;
-	i = 0x5f3759df - (i>>1);
-	y = *(float*)&i;
-	return y * (1.5f - (halfx * y * y));
+	union FloatInt {
+		float f;
+		int32_t i;
+	} value;
+
+	value.f = x;
+	value.i = 0x5f3759df - (value.i >> 1);
+	return value.f * (1.5f - (0.5f * x * value.f * value.f));
 }
 
 

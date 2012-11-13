@@ -327,8 +327,8 @@ void callback_magnetometer(Async *a);
 void callback_gyroscope(Async *a);
 
 void imu_blinkenlights(void);
-void imu_leds_on(bool on);
-void imu_set_register(uint16_t addr, uint16_t reg, uint8_t value);
+void imu_leds_on(const bool on);
+void imu_set_register(const uint16_t addr, const uint16_t reg, const uint8_t value);
 
 void imu_save_calibration(const IMUCalibrationNonConst *icnc);
 void imu_fill_calibration(IMUCalibrationNonConst *icnc);
