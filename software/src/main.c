@@ -48,13 +48,14 @@
 #include "communication.h"
 #include "imu.h"
 
+extern bool usb_first_connection;
+uint8_t brick_hardware_version[3];
+
 void vApplicationStackOverflowHook(xTaskHandle *pxTask, signed char *pcTaskName) {
 	logf("Stack Overflow\n\r");
 	led_on(LED_STD_RED);
 	while(true);
 }
-
-uint8_t brick_hardware_version[3];
 
 int main() {
 	const Pin pins_stack[] = {PINS_STACK};
@@ -81,6 +82,7 @@ int main() {
     				1,
     				(xTaskHandle *)NULL);
     } else {
+    	usb_first_connection = false;
     	logi("Configure as Stack Participant (SPI)\n\r");
         spi_stack_slave_init();
 
