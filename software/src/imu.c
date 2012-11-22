@@ -116,9 +116,9 @@ Async imu_async;
 uint8_t imu_sensor_data[8] = {0};
 
 extern Twid twid;
-extern ComType com_current;
 extern Mutex mutex_twi_bricklet;
-extern uint32_t com_brick_uid;
+
+extern ComInfo com_info;
 
 uint16_t imu_convergence_speed = 30;
 
@@ -174,7 +174,7 @@ void tick_task(const uint8_t tick_type) {
 			if(message_counter >= 100) {
 				message_counter = 0;
 				if(brick_init_enumeration(COM_USB)) {
-					com_current = COM_USB;
+					com_info.current = COM_USB;
 					message_counter = -1;
 				}
 			}
@@ -201,46 +201,46 @@ void make_period_signal(const uint8_t type) {
 	switch(type) {
 		case IMU_PERIOD_TYPE_ACC: {
 			AccelerationSignal as;
-			com_make_default_header(&as, com_brick_uid, sizeof(AccelerationSignal), FID_ACCELERATION);
+			com_make_default_header(&as, com_info.uid, sizeof(AccelerationSignal), FID_ACCELERATION);
 			as.x = imu_acc_x;
 			as.y = imu_acc_y;
 			as.z = imu_acc_z;
 
 			send_blocking_with_timeout(&as,
 			                           sizeof(AccelerationSignal),
-			                           com_current);
+			                           com_info.current);
 			break;
 		}
 
 		case IMU_PERIOD_TYPE_MAG: {
 			MagneticFieldSignal mfs;
-			com_make_default_header(&mfs, com_brick_uid, sizeof(MagneticFieldSignal), FID_MAGNETIC_FIELD);
+			com_make_default_header(&mfs, com_info.uid, sizeof(MagneticFieldSignal), FID_MAGNETIC_FIELD);
 			mfs.x = imu_mag_x;
 			mfs.y = imu_mag_y;
 			mfs.z = imu_mag_z;
 
 			send_blocking_with_timeout(&mfs,
 			                           sizeof(MagneticFieldSignal),
-			                           com_current);
+			                           com_info.current);
 			break;
 		}
 
 		case IMU_PERIOD_TYPE_ANG: {
 			AngularVelocitySignal avs;
-			com_make_default_header(&avs, com_brick_uid, sizeof(AngularVelocitySignal), FID_ANGULAR_VELOCITY);
+			com_make_default_header(&avs, com_info.uid, sizeof(AngularVelocitySignal), FID_ANGULAR_VELOCITY);
 			avs.x = imu_gyr_x;
 			avs.y = imu_gyr_y;
 			avs.z = imu_gyr_z;
 
 			send_blocking_with_timeout(&avs,
 			                           sizeof(AngularVelocitySignal),
-			                           com_current);
+			                           com_info.current);
 			break;
 		}
 
 		case IMU_PERIOD_TYPE_ALL: {
 			AllDataSignal ads;
-			com_make_default_header(&ads, com_brick_uid, sizeof(AllDataSignal), FID_ALL_DATA);
+			com_make_default_header(&ads, com_info.uid, sizeof(AllDataSignal), FID_ALL_DATA);
 			ads.acc_x       = imu_acc_x;
 			ads.acc_y       = imu_acc_y;
 			ads.acc_z       = imu_acc_z;
@@ -254,26 +254,26 @@ void make_period_signal(const uint8_t type) {
 
 			send_blocking_with_timeout(&ads,
 			                           sizeof(AllDataSignal),
-			                           com_current);
+			                           com_info.current);
 			break;
 		}
 
 		case IMU_PERIOD_TYPE_ORI: {
 			OrientationSignal os;
-			com_make_default_header(&os, com_brick_uid, sizeof(OrientationSignal), FID_ORIENTATION);
+			com_make_default_header(&os, com_info.uid, sizeof(OrientationSignal), FID_ORIENTATION);
 			os.roll  = imu_roll;
 			os.pitch = imu_pitch;
 			os.yaw   = imu_yaw;
 
 			send_blocking_with_timeout(&os,
 			                           sizeof(OrientationSignal),
-			                           com_current);
+			                           com_info.current);
 			break;
 		}
 
 		case IMU_PERIOD_TYPE_QUA: {
 			QuaternionSignal qs;
-			com_make_default_header(&qs, com_brick_uid, sizeof(QuaternionSignal), FID_QUATERNION);
+			com_make_default_header(&qs, com_info.uid, sizeof(QuaternionSignal), FID_QUATERNION);
 			qs.x = imu_qua_x;
 			qs.y = imu_qua_y;
 			qs.z = imu_qua_z;
@@ -281,7 +281,7 @@ void make_period_signal(const uint8_t type) {
 
 			send_blocking_with_timeout(&qs,
 			                           sizeof(QuaternionSignal),
-			                           com_current);
+			                           com_info.current);
 			break;
 		}
 	}
