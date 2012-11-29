@@ -16,11 +16,11 @@ function cb_quaternion($x, $y, $z, $w)
     echo "x: $x\ny: $y\nz: $z\nw: $w\n";
 }
 
-$ipcon = new IPConnection($host, $port); // Create IP connection to brickd
-$imu = new BrickIMU($uid); // Create device object
+$ipcon = new IPConnection(); // Create IP connection
+$imu = new BrickIMU($uid, $ipcon); // Create device object
 
-$ipcon->addDevice($imu); // Add device to IP connection
-// Don't use device before it is added to a connection
+$ipcon->connect($host, $port); // Connect to brickd
+// Don't use device before ipcon is connected
 
 // Set period for quaternion callback to 1s
 $imu->setQuaternionPeriod(1000);
