@@ -8,28 +8,25 @@
 #define UID "ayQskyoNrCW" // Change to your UID
 
 // Quaternion callback
-void cb_quaternion(float x, float y, float z, float w) {
+void cb_quaternion(float x, float y, float z, float w, void *user_data) {
 	printf("x: %f\ny: %f\nz: %f\nw: %f\n\n", x, y, z, w);
 }
 
 int main() {
-	// Create IP connection to brickd
+	// Create IP connection
 	IPConnection ipcon;
-	if(ipcon_create(&ipcon, HOST, PORT) < 0) {
-		fprintf(stderr, "Could not create connection\n");
-		exit(1);
-	}
+	ipcon_create(&ipcon);
 
 	// Create device object
 	IMU imu;
-	imu_create(&imu, UID); 
+	imu_create(&imu, UID, &ipcon); 
 
-	// Add device to IP connection
-	if(ipcon_add_device(&ipcon, &imu) < 0) {
-		fprintf(stderr, "Could not connect to Brick\n");
+	// Connect to brickd
+	if(ipcon_connect(&ipcon, HOST, PORT) < 0) {
+		fprintf(stderr, "Could not connect\n");
 		exit(1);
 	}
-	// Don't use device before it is added to a connection
+	// Don't use device before ipcon is connected
 
 	// Set period for quaternion callback to 1s
 	imu_set_quaternion_period(&imu, 1000);
@@ -37,7 +34,8 @@ int main() {
 	// Register "quaternion callback" to cb_quaternion
 	imu_register_callback(&imu, 
 	                      IMU_CALLBACK_QUATERNION, 
-	                      cb_quaternion);
+	                      cb_quaternion,
+						  NULL);
 
 	printf("Press key to exit\n");
 	getchar();
