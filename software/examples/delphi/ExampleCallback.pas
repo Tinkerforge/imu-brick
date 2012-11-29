@@ -12,7 +12,8 @@ type
     ipcon: TIPConnection;
     imu: TBrickIMU;
   public
-    procedure QuaternionCB(const x: single; const y: single;
+    procedure QuaternionCB(sender: TObject; 
+                           const x: single; const y: single;
                            const z: single; const w: single);
     procedure Execute;
   end;
@@ -26,7 +27,8 @@ var
   e: TExample;
 
 { Quaternion callback }
-procedure TExample.QuaternionCB(const x: single; const y: single;
+procedure TExample.QuaternionCB(sender: TObject; 
+                                const x: single; const y: single;
                                 const z: single; const w: single);
 begin
   WriteLn(Format('x: %.6f', [x]));
@@ -38,15 +40,15 @@ end;
 
 procedure TExample.Execute;
 begin
-  { Create IP connection to brickd }
-  ipcon := TIPConnection.Create(HOST, PORT);
+  { Create IP connection }
+  ipcon := TIPConnection.Create();
 
   { Create device object }
-  imu := TBrickIMU.Create(UID);
+  imu := TBrickIMU.Create(UID, ipcon);
 
-  { Add device to IP connection }
-  ipcon.AddDevice(imu);
-  { Don't use device before it is added to a connection }
+  { Connect to brickd }
+  ipcon.Connect(HOST, PORT);
+  { Don't use device before ipcon is connected }
 
   { Set period for quaternion callback to 1s }
   imu.SetQuaternionPeriod(1000);
@@ -56,7 +58,6 @@ begin
 
   WriteLn('Press key to exit');
   ReadLn;
-  ipcon.Destroy;
 end;
 
 begin
