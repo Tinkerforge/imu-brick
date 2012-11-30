@@ -307,6 +307,7 @@ void set_calibration(const ComType com, const SetCalibration *data) {
 		}
 
 		default: {
+			BA->com_return_error(data, sizeof(MessageHeader), MESSAGE_ERROR_CODE_INVALID_PARAMETER, com);
 			return;
 		}
 	}
@@ -378,6 +379,11 @@ void get_calibration(const ComType com, const GetCalibration *data) {
 			gcr.data[6] = ic->imu_gyr_z_bias_high;
 			gcr.data[7] = ic->imu_gyr_temp_high;
 			break;
+		}
+
+		default: {
+			BA->com_return_error(data, sizeof(GetCalibrationReturn), MESSAGE_ERROR_CODE_INVALID_PARAMETER, com);
+			return;
 		}
 	}
 
@@ -497,4 +503,3 @@ void get_quaternion_period(const ComType com, const GetQuaternionPeriod *data) {
 	send_blocking_with_timeout(&gqpr, sizeof(GetQuaternionPeriodReturn), com);
 	logimui("get_quaternion_period: %d\n\r", imu_period[IMU_PERIOD_TYPE_QUA]);
 }
-
