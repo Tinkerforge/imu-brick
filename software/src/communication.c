@@ -307,7 +307,7 @@ void set_calibration(const ComType com, const SetCalibration *data) {
 		}
 
 		default: {
-			BA->com_return_error(data, sizeof(MessageHeader), MESSAGE_ERROR_CODE_INVALID_PARAMETER, com);
+			com_return_error(data, sizeof(MessageHeader), MESSAGE_ERROR_CODE_INVALID_PARAMETER, com);
 			return;
 		}
 	}
@@ -382,7 +382,7 @@ void get_calibration(const ComType com, const GetCalibration *data) {
 		}
 
 		default: {
-			BA->com_return_error(data, sizeof(GetCalibrationReturn), MESSAGE_ERROR_CODE_INVALID_PARAMETER, com);
+			com_return_error(data, sizeof(GetCalibrationReturn), MESSAGE_ERROR_CODE_INVALID_PARAMETER, com);
 			return;
 		}
 	}
