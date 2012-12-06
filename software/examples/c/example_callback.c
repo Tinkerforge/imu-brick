@@ -9,6 +9,8 @@
 
 // Quaternion callback
 void cb_quaternion(float x, float y, float z, float w, void *user_data) {
+	(void)user_data; // avoid unused parameter warning
+
 	printf("x: %f\ny: %f\nz: %f\nw: %f\n\n", x, y, z, w);
 }
 
@@ -32,10 +34,10 @@ int main() {
 	imu_set_quaternion_period(&imu, 1000);
 
 	// Register "quaternion callback" to cb_quaternion
-	imu_register_callback(&imu, 
-	                      IMU_CALLBACK_QUATERNION, 
+	imu_register_callback(&imu,
+	                      IMU_CALLBACK_QUATERNION,
 	                      cb_quaternion,
-						  NULL);
+	                      NULL);
 
 	printf("Press key to exit\n");
 	getchar();
