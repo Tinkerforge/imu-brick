@@ -36,7 +36,7 @@ int main() {
 	// Register "quaternion callback" to cb_quaternion
 	imu_register_callback(&imu,
 	                      IMU_CALLBACK_QUATERNION,
-	                      cb_quaternion,
+	                      (void *)cb_quaternion,
 	                      NULL);
 
 	printf("Press key to exit\n");
