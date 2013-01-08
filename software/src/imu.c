@@ -489,10 +489,8 @@ void update_gyr_temperature_aprox(void) {
 }
 
 void callback_gyroscope(Async *a) {
-	static signed portBASE_TYPE xHigherPriorityTaskWoken;
-	xHigherPriorityTaskWoken = pdFALSE;
-	xSemaphoreGiveFromISR(mutex_twi_bricklet, &xHigherPriorityTaskWoken );
-	//mutex_give(mutex_twi_bricklet);
+	int32_t higher_prio_task_woken = 0;
+	mutex_give_isr(mutex_twi_bricklet, &higher_prio_task_woken);
 
 	int16_t t = imu_sensor_data[1] | (imu_sensor_data[0] << 8);
 	int16_t x = imu_sensor_data[3] | (imu_sensor_data[2] << 8);
@@ -520,7 +518,7 @@ void callback_gyroscope(Async *a) {
 	imu_gyr_z = ((-z + imu_gyr_z_bias)*
 	             ic->imu_gyr_z_gain_multiplier)/ic->imu_gyr_z_gain_divider;
 
-	portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
+	yield_from_isr(higher_prio_task_woken);
 }
 
 void update_sensors_async(void) {
