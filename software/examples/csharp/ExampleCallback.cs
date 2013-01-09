@@ -7,7 +7,7 @@ class Example
 	private static string UID = "ayQskyoNrCW"; // Change to your UID
 
 	// Quaternion callback
-	static void QuaternionCB(object sender, float x, float y, float z, float w)
+	static void QuaternionCB(BrickIMU sender, float x, float y, float z, float w)
 	{
 		System.Console.WriteLine("x: " + x + "\ny: " + y + "\nz: " + z + "\nw: " + w + "\n");
 	}

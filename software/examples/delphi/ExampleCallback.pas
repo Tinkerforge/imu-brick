@@ -12,7 +12,7 @@ type
     ipcon: TIPConnection;
     imu: TBrickIMU;
   public
-    procedure QuaternionCB(sender: TObject; 
+    procedure QuaternionCB(sender: TBrickIMU; 
                            const x: single; const y: single;
                            const z: single; const w: single);
     procedure Execute;
@@ -27,7 +27,7 @@ var
   e: TExample;
 
 { Quaternion callback }
-procedure TExample.QuaternionCB(sender: TObject; 
+procedure TExample.QuaternionCB(sender: TBrickIMU; 
                                 const x: single; const y: single;
                                 const z: single; const w: single);
 begin
