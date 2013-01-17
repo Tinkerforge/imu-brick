@@ -19,7 +19,7 @@ public class ExampleCallback {
 		imu.setQuaternionPeriod(1000);
 
 		// Add and implement quaternion listener 
-		imu.addListener(new BrickIMU.QuaternionListener() {
+		imu.addQuaternionListener(new BrickIMU.QuaternionListener() {
 			public void quaternion(float x, float y, float z, float w) {
 				System.out.println("x: " + x + "\ny: " + y + "\nz: " + z + "\nw: " + w + "\n");
 			}
