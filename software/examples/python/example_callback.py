@@ -27,3 +27,4 @@ if __name__ == "__main__":
     imu.register_callback(imu.CALLBACK_QUATERNION, quaternion_cb)
 
     raw_input('Press key to exit\n') # Use input() in Python 3
+    ipcon.disconnect()
