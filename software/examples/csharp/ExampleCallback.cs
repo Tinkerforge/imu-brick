@@ -9,7 +9,11 @@ class Example
 	// Quaternion callback
 	static void QuaternionCB(BrickIMU sender, float x, float y, float z, float w)
 	{
-		System.Console.WriteLine("x: " + x + "\ny: " + y + "\nz: " + z + "\nw: " + w + "\n");
+		System.Console.WriteLine("x: " + x);
+		System.Console.WriteLine("y: " + y);
+		System.Console.WriteLine("z: " + z);
+		System.Console.WriteLine("w: " + w);
+		System.Console.WriteLine("");
 	}
 
 	static void Main() 

@@ -13,7 +13,7 @@ $uid = 'a4JriVLwq7E'; // Change to your UID
 // Quaternion callback
 function cb_quaternion($x, $y, $z, $w)
 {
-    echo "x: $x\ny: $y\nz: $z\nw: $w\n";
+    echo "x: $x\ny: $y\nz: $z\nw: $w\n\n";
 }
 
 $ipcon = new IPConnection(); // Create IP connection

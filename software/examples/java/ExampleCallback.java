@@ -21,7 +21,11 @@ public class ExampleCallback {
 		// Add and implement quaternion listener 
 		imu.addQuaternionListener(new BrickIMU.QuaternionListener() {
 			public void quaternion(float x, float y, float z, float w) {
-				System.out.println("x: " + x + "\ny: " + y + "\nz: " + z + "\nw: " + w + "\n");
+				System.out.println("x: " + x);
+				System.out.println("y: " + y);
+				System.out.println("z: " + z);
+				System.out.println("w: " + w);
+				System.out.println("");
 			}
 		});
 

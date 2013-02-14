@@ -8,9 +8,8 @@ UID = "ayQskyoNrCW" # Change to your UID
 from tinkerforge.ip_connection import IPConnection
 from tinkerforge.brick_imu import IMU
 
-
 # Quaternion callback
-def quaternion_cb(x, y, z, w):
+def cb_quaternion(x, y, z, w):
     print("x: " + str(x) + "\ny: " + str(y) + "\nz: " + str(z) + "\nw: " + str(w) + "\n")
 
 if __name__ == "__main__":
@@ -24,7 +23,7 @@ if __name__ == "__main__":
     imu.set_quaternion_period(1000)
 
     # Register quaternion callback
-    imu.register_callback(imu.CALLBACK_QUATERNION, quaternion_cb)
+    imu.register_callback(imu.CALLBACK_QUATERNION, cb_quaternion)
 
     raw_input('Press key to exit\n') # Use input() in Python 3
     ipcon.disconnect()
