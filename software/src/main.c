@@ -1,5 +1,5 @@
 /* imu-brick
- * Copyright (C) 2011-2012 Olaf Lüke <olaf@tinkerforge.com>
+ * Copyright (C) 2011-2013 Olaf Lüke <olaf@tinkerforge.com>
  *
  * main.c: IMU Brick startup code
  *
@@ -37,6 +37,7 @@
 #include "bricklib/logging/logging.h"
 #include "bricklib/bricklet/bricklet_init.h"
 #include "bricklib/drivers/uid/uid.h"
+#include "bricklib/drivers/wdt/wdt.h"
 #include "bricklib/drivers/pio/pio.h"
 #include "bricklib/utility/init.h"
 #include "bricklib/utility/util_definitions.h"
@@ -52,7 +53,7 @@ extern bool usb_first_connection;
 uint8_t brick_hardware_version[3];
 
 void vApplicationStackOverflowHook(xTaskHandle *pxTask, signed char *pcTaskName) {
-	logf("Stack Overflow\n\r");
+	logf("Stack Overflow: %s\n\r", pcTaskName);
 	led_on(LED_STD_RED);
 	while(true);
 }
@@ -66,6 +67,7 @@ int main() {
 	brick_hardware_version[2] = BRICK_HARDWARE_VERSION_REVISION;
 
 	brick_init();
+	wdt_restart();
 
 #ifdef PROFILING
     profiling_init();
@@ -74,6 +76,7 @@ int main() {
     if(usb_is_connected()) {
     	logi("Configure as USB device\n\r");
     	usb_init();
+    	wdt_restart();
 
     	xTaskCreate(usb_message_loop,
     				(signed char *)"usb_ml",
@@ -85,6 +88,7 @@ int main() {
     	usb_first_connection = false;
     	logi("Configure as Stack Participant (SPI)\n\r");
         spi_stack_slave_init();
+        wdt_restart();
 
     	xTaskCreate(spi_stack_slave_message_loop,
     			    (signed char *)"spi_ml",
@@ -95,7 +99,10 @@ int main() {
     }
 
 	imu_init();
+	wdt_restart();
 
 	brick_init_start_tick_task();
+	wdt_restart();
+
 	vTaskStartScheduler();
 }
