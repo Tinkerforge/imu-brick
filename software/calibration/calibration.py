@@ -558,14 +558,17 @@ class IMUCal:
         self.gyr_bias_xh, self.gyr_bias_yh, self.gyr_bias_zh = (self.gyr_sum_x/self.gyr_sum_i, self.gyr_sum_y/self.gyr_sum_i, self.gyr_sum_z/self.gyr_sum_i)
         print 'value: ', (self.gyr_bias_xh, self.gyr_bias_yh, self.gyr_bias_zh, self.gyr_bias_th)
     
-    def cb_enumerate(self, uid, name, stack_id, is_new):
-        if 'IMU' in name:
+    def cb_enumerate(self, uid, connected_uid, position, hardware_version, firmware_version, device_identifier, enumeration_type):
+        if device_identifier == 16:
             self.imu_uid = uid
     
     def __init__(self):
-        ipcon = IPConnection(HOST, PORT)
-        
-        ipcon.enumerate(self.cb_enumerate)
+        ipcon = IPConnection()
+        ipcon.connect(HOST, PORT)
+            
+        ipcon.register_callback(IPConnection.CALLBACK_ENUMERATE, self.cb_enumerate)
+
+        ipcon.enumerate()
         i = 0
         while self.imu_uid == None:
             time.sleep(0.1)
@@ -574,10 +577,8 @@ class IMUCal:
                 print "Didn't find IMU, exiting"
                 return
         
-        self.s = Servo('9TZyPftcTLE')
-        ipcon.add_device(self.s)
-        self.i = IMU(self.imu_uid)
-        ipcon.add_device(self.i)
+        self.s = Servo('9TZyPftcTLE', ipcon)
+        self.i = IMU(self.imu_uid, ipcon)
     
         self.s.set_output_voltage(self.SERVO_VOLTAGE)
         for servo in self.servos.values():
