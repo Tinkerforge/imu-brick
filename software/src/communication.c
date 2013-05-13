@@ -60,6 +60,7 @@ extern float imu_qua_w;
 
 extern int16_t imu_gyr_temperature;
 extern bool imu_use_leds;
+extern bool imu_use_orientation;
 
 extern uint16_t imu_convergence_speed;
 extern float imu_filter_beta;
@@ -502,4 +503,27 @@ void get_quaternion_period(const ComType com, const GetQuaternionPeriod *data) {
 
 	send_blocking_with_timeout(&gqpr, sizeof(GetQuaternionPeriodReturn), com);
 	logimui("get_quaternion_period: %d\n\r", imu_period[IMU_PERIOD_TYPE_QUA]);
+}
+
+void orientation_calculation_on(const ComType com, const OrientationCalculationOn *data) {
+	imu_use_orientation = true;
+	com_return_setter(com, data);
+	logimui("orientation_calculation_on\n\r");
+}
+
+void orientation_calculation_off(const ComType com, const OrientationCalculationOff *data) {
+	imu_use_orientation = false;
+	com_return_setter(com, data);
+	logimui("orientation_calculation_off\n\r");
+}
+
+void is_orientation_calculation_on(const ComType com, const IsOrientationCalculationOn *data) {
+	IsOrientationCalculationOnReturn ircor;
+
+	ircor.header                     = data->header;
+	ircor.header.length              = sizeof(IsOrientationCalculationOnReturn);
+	ircor.orientation_calculation_on = imu_use_orientation;
+
+	send_blocking_with_timeout(&ircor, sizeof(IsOrientationCalculationOnReturn), com);
+	logimui("is_orientation_calculation_on: %d\n\r", imu_use_orientation);
 }

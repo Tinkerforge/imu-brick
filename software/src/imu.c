@@ -111,7 +111,8 @@ float imu_filter_zeta = SQRT3DIV4 * M_PI * \
                         ((IMU_DEFAULT_CONVERGENCE_SPEED/60.0f) / 180.0f);
 
 bool imu_use_leds = false;
-uint32_t imu_tick = 0;
+bool imu_use_orientation = true;
+bool imu_mode_update = true;
 Async imu_async;
 uint8_t imu_sensor_data[8] = {0};
 
@@ -141,34 +142,34 @@ void tick_task(const uint8_t tick_type) {
 	static int8_t message_counter = 0;
 
 	if(tick_type == TICK_TASK_TYPE_CALCULATION) {
-		switch(imu_tick % 2) {
-			case 0:
-				// 400us
-				imu_blinkenlights();
-				imu_quaternion_to_orientation();
-				update_sensors_async();
-				break;
+		if(imu_mode_update) {
+			// 120us
+			imu_blinkenlights();
 
-			case 1:
-				// 450us
-				imu_update_filter((float)imu_gyr_x*M_PI/(14.375*180),
-				                  (float)imu_gyr_y*M_PI/(14.375*180),
-				                  (float)imu_gyr_z*M_PI/(14.375*180),
-				                  (float)imu_acc_x,
-				                  (float)imu_acc_y,
-				                  (float)imu_acc_z,
-				                  (float)imu_mag_x,
-				                  (float)imu_mag_y,
-				                  (float)imu_mag_z);
-				break;
+			// 700us
+			update_sensors_sync();
+		} else {
+			// 350us
+			imu_quaternion_to_orientation();
+
+			// 450us
+			imu_update_filter((float)imu_gyr_x*M_PI/(14.375*180),
+							  (float)imu_gyr_y*M_PI/(14.375*180),
+							  (float)imu_gyr_z*M_PI/(14.375*180),
+							  (float)imu_acc_x,
+							  (float)imu_acc_y,
+							  (float)imu_acc_z,
+							  (float)imu_mag_x,
+							  (float)imu_mag_y,
+							  (float)imu_mag_z);
 		}
+		imu_mode_update = !imu_mode_update;
 
 		for(uint8_t i = 0; i < IMU_PERIOD_NUM; i++) {
 			if(imu_period_counter[i] < UINT32_MAX) {
 				imu_period_counter[i]++;
 			}
 		}
-		imu_tick++;
 	} else if(tick_type == TICK_TASK_TYPE_MESSAGE) {
 		if(usb_first_connection && !usbd_hal_is_disabled(IN_EP)) {
 			message_counter++;
@@ -416,6 +417,9 @@ void imu_blinkenlights(void) {
 }
 
 void imu_quaternion_to_orientation(void) {
+	if(!imu_use_orientation) {
+		return;
+	}
 	imu_roll = atan2(2*imu_qua_y*imu_qua_w - 2*imu_qua_x*imu_qua_z,
 	                 1 - 2*imu_qua_y*imu_qua_y -
 	                     2*imu_qua_z*imu_qua_z)*18000/M_PI;
@@ -440,14 +444,16 @@ void callback_accelerometer(Async *a) {
 	              ic->imu_acc_z_bias)*
 	              ic->imu_acc_z_gain_multiplier)/ic->imu_acc_z_gain_divider;
 
-	imu_async.callback = callback_magnetometer;
-    TWID_Read(&twid,
-    		  LSM_I2C_MAG_ADDRESS,
-    		  LSM_REGISTER_MAG_X_H,
-              1,
-              imu_sensor_data,
-              6,
-              &imu_async);
+	if(a != NULL) {
+		imu_async.callback = callback_magnetometer;
+		TWID_Read(&twid,
+				  LSM_I2C_MAG_ADDRESS,
+				  LSM_REGISTER_MAG_X_H,
+				  1,
+				  imu_sensor_data,
+				  6,
+				  &imu_async);
+	}
 }
 
 void callback_magnetometer(Async *a) {
@@ -463,14 +469,16 @@ void callback_magnetometer(Async *a) {
 	imu_mag_z = (( z + ic->imu_mag_z_bias)*ic->imu_mag_z_gain_multiplier)/
 	             ic->imu_mag_z_gain_divider;
 
-	imu_async.callback = callback_gyroscope;
-    TWID_Read(&twid,
-			  ITG_I2C_GYR_ADDRESS,
-			  ITG_REGISTER_TEMP_H,
-              1,
-              imu_sensor_data,
-              8,
-              &imu_async);
+	if(a != NULL) {
+		imu_async.callback = callback_gyroscope;
+		TWID_Read(&twid,
+				  ITG_I2C_GYR_ADDRESS,
+				  ITG_REGISTER_TEMP_H,
+				  1,
+				  imu_sensor_data,
+				  8,
+				  &imu_async);
+	}
 }
 
 void update_gyr_temperature_aprox(void) {
@@ -490,7 +498,9 @@ void update_gyr_temperature_aprox(void) {
 
 void callback_gyroscope(Async *a) {
 	int32_t higher_prio_task_woken = 0;
-	mutex_give_isr(mutex_twi_bricklet, &higher_prio_task_woken);
+	if(a != NULL) {
+		mutex_give_isr(mutex_twi_bricklet, &higher_prio_task_woken);
+	}
 
 	int16_t t = imu_sensor_data[1] | (imu_sensor_data[0] << 8);
 	int16_t x = imu_sensor_data[3] | (imu_sensor_data[2] << 8);
@@ -518,7 +528,40 @@ void callback_gyroscope(Async *a) {
 	imu_gyr_z = ((-z + imu_gyr_z_bias)*
 	             ic->imu_gyr_z_gain_multiplier)/ic->imu_gyr_z_gain_divider;
 
-	yield_from_isr(higher_prio_task_woken);
+	if(a != NULL) {
+		yield_from_isr(higher_prio_task_woken);
+	}
+}
+
+void update_sensors_sync(void) {
+	mutex_take(mutex_twi_bricklet, MUTEX_BLOCKING);
+    TWID_Read(&twid,
+    		  LSM_I2C_ACC_ADDRESS,
+    		  LSM_REGISTER_ACC_X_L | LSM_ACC_READ_INCREMENTAL,
+              1,
+              imu_sensor_data,
+              6,
+              NULL);
+    callback_accelerometer(NULL);
+
+	TWID_Read(&twid,
+			  LSM_I2C_MAG_ADDRESS,
+			  LSM_REGISTER_MAG_X_H,
+			  1,
+			  imu_sensor_data,
+			  6,
+			  NULL);
+	callback_magnetometer(NULL);
+
+	TWID_Read(&twid,
+			  ITG_I2C_GYR_ADDRESS,
+			  ITG_REGISTER_TEMP_H,
+			  1,
+			  imu_sensor_data,
+			  8,
+			  NULL);
+	callback_gyroscope(NULL);
+	mutex_give(mutex_twi_bricklet);
 }
 
 void update_sensors_async(void) {

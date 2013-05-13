@@ -64,6 +64,9 @@
 #define FID_ALL_DATA 34
 #define FID_ORIENTATION 35
 #define FID_QUATERNION 36
+#define FID_ORIENTATION_CALCULATION_ON 37
+#define FID_ORIENTATION_CALCULATION_OFF 38
+#define FID_IS_ORIENTATION_CALCULATION_ON 39
 
 #define COM_MESSAGES_USER \
 	{FID_GET_ACCELERATION, (message_handler_func_t)get_acceleration}, \
@@ -95,7 +98,16 @@
 	{FID_SET_ORIENTATION_PERIOD, (message_handler_func_t)set_orientation_period}, \
 	{FID_GET_ORIENTATION_PERIOD, (message_handler_func_t)get_orientation_period}, \
 	{FID_SET_QUATERNION_PERIOD, (message_handler_func_t)set_quaternion_period}, \
-	{FID_GET_QUATERNION_PERIOD, (message_handler_func_t)get_quaternion_period},
+	{FID_GET_QUATERNION_PERIOD, (message_handler_func_t)get_quaternion_period}, \
+	{FID_ACCELERATION, (message_handler_func_t)NULL}, \
+	{FID_MAGNETIC_FIELD, (message_handler_func_t)NULL}, \
+	{FID_ANGULAR_VELOCITY, (message_handler_func_t)NULL}, \
+	{FID_ALL_DATA, (message_handler_func_t)NULL}, \
+	{FID_ORIENTATION, (message_handler_func_t)NULL}, \
+	{FID_QUATERNION, (message_handler_func_t)NULL}, \
+	{FID_ORIENTATION_CALCULATION_ON, (message_handler_func_t)orientation_calculation_on}, \
+	{FID_ORIENTATION_CALCULATION_OFF, (message_handler_func_t)orientation_calculation_off}, \
+	{FID_IS_ORIENTATION_CALCULATION_ON, (message_handler_func_t)is_orientation_calculation_on},
 
 
 typedef struct {
@@ -390,6 +402,22 @@ typedef struct {
 	float w;
 } __attribute__((__packed__)) QuaternionSignal;
 
+typedef struct {
+	MessageHeader header;
+} __attribute__((__packed__)) OrientationCalculationOn;
+
+typedef struct {
+	MessageHeader header;
+} __attribute__((__packed__)) OrientationCalculationOff;
+
+typedef struct {
+	MessageHeader header;
+} __attribute__((__packed__)) IsOrientationCalculationOn;
+
+typedef struct {
+	MessageHeader header;
+	bool orientation_calculation_on;
+} __attribute__((__packed__)) IsOrientationCalculationOnReturn;
 
 void get_acceleration(const ComType com, const GetAcceleration *data);
 void get_magnetic_field(const ComType com, const GetMagneticField *data);
@@ -421,5 +449,8 @@ void set_orientation_period(const ComType com, const SetOrientationPeriod *data)
 void get_orientation_period(const ComType com, const GetOrientationPeriod *data);
 void set_quaternion_period(const ComType com, const SetQuaternionPeriod *data);
 void get_quaternion_period(const ComType com, const GetQuaternionPeriod *data);
+void orientation_calculation_on(const ComType com, const OrientationCalculationOn *data);
+void orientation_calculation_off(const ComType com, const OrientationCalculationOff *data);
+void is_orientation_calculation_on(const ComType com, const IsOrientationCalculationOn *data);
 
 #endif

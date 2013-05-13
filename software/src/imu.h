@@ -321,6 +321,7 @@ void tick_task(const uint8_t tick_type);
 void make_period_signal(const uint8_t type);
 
 void update_gyr_temperature_aprox(void);
+void update_sensors_sync(void);
 void update_sensors_async(void);
 void callback_accelerometer(Async *a);
 void callback_magnetometer(Async *a);
