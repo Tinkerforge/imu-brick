@@ -13,3 +13,4 @@
 2.0.0: Support for protocol 2.0
 2.0.1: Add watchdog timer (restart after 16s of "deadlock")
 2.0.2: Add orientation calculation on/off API, make i2c communication synchronous
+2.0.3: Use tick_task to detect usb connect/disconnect instead of interrupt (through bricklib)
