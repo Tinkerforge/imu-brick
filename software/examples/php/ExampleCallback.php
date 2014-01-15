@@ -6,9 +6,9 @@ require_once('Tinkerforge/BrickIMU.php');
 use Tinkerforge\IPConnection;
 use Tinkerforge\BrickIMU;
 
-$host = 'localhost';
-$port = 4223;
-$uid = 'a4JriVLwq7E'; // Change to your UID
+const HOST = 'localhost';
+const PORT = 4223;
+const UID = 'a4JriVLwq7E'; // Change to your UID
 
 // Quaternion callback
 function cb_quaternion($x, $y, $z, $w)
@@ -17,9 +17,9 @@ function cb_quaternion($x, $y, $z, $w)
 }
 
 $ipcon = new IPConnection(); // Create IP connection
-$imu = new BrickIMU($uid, $ipcon); // Create device object
+$imu = new BrickIMU(UID, $ipcon); // Create device object
 
-$ipcon->connect($host, $port); // Connect to brickd
+$ipcon->connect(HOST, PORT); // Connect to brickd
 // Don't use device before ipcon is connected
 
 // Set period for quaternion callback to 1s
