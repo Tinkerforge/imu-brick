@@ -1,0 +1,33 @@
+Needs["NETLink`"]
+LoadNETAssembly["Tinkerforge",NotebookDirectory[]<>"../../.."]
+
+host="localhost"
+port=4223
+uid="631cHu"(* Change to your UID *)
+
+(* Create IPConnection and device object *)
+ipcon=NETNew["Tinkerforge.IPConnection"]
+imu=NETNew["Tinkerforge.BrickIMU",uid,ipcon]
+ipcon@Connect[host,port]
+
+(* Set period for quaternion callback to 1s *)
+imu@SetQuaternionPeriod[1000]
+
+(* Quaternion callback *)
+QuaternionCB[sender_,x_,y_,z_,w_]:=
+ Module[{},
+  Print["x: "<>ToString[x]];
+  Print["y: "<>ToString[y]];
+  Print["z: "<>ToString[z]];
+  Print["w: "<>ToString[w]];
+  Print[""]
+ ]
+
+AddEventHandler[imu@Quaternion,QuaternionCB]
+
+Input["Click OK to exit"]
+
+(* Clean up *)
+ipcon@Disconnect[]
+ReleaseNETObject[imu]
+ReleaseNETObject[ipcon]
