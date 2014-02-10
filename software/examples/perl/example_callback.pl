@@ -17,8 +17,8 @@ sub cb_quaternion
 	print "\nw:  ".$w."\n";
 }
 
-my $ipcon = IPConnection->new(); # Create IP connection
-my $imu = BrickIMU->new(&UID, $ipcon); # Create device object
+my $ipcon = Tinkerforge::IPConnection->new(); # Create IP connection
+my $imu = Tinkerforge::BrickIMU->new(&UID, $ipcon); # Create device object
 
 $ipcon->connect(&HOST, &PORT); # Connect to brickd
 # Don't use device before ipcon is connected
