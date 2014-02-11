@@ -10,9 +10,7 @@ var imu = new BrickIMU(UID, ipcon);// Create device object
 
 ipcon.connect(HOST, PORT,
     function(error) {
-        if(error === IPConnection.ERROR_ALREADY_CONNECTED) {
-            console.log('Error: Already connected');        
-        }
+        console.log('Error: '+error);        
     }
 );// Connect to brickd
 
@@ -26,6 +24,7 @@ ipcon.on(IPConnection.CALLBACK_CONNECTED,
 
 // Register quaternion callback
 imu.on(BrickIMU.CALLBACK_QUATERNION,
+    // Quaternion callback
     function(x, y, z, w) {
         console.log('x: '+x);
         console.log('y: '+y);
@@ -36,14 +35,10 @@ imu.on(BrickIMU.CALLBACK_QUATERNION,
 );
 
 console.log("Press any key to exit ...");
-process.stdin.on('data', function(data) {
-	    ipcon.disconnect(
-            function(error) {
-                if(error === IPConnection.ERROR_NOT_CONNECTED) {
-                    console.log('Error: Not connected');        
-                }
-            }
-        );
-process.exit(0);
-});
+process.stdin.on('data',
+    function(data) {
+        ipcon.disconnect();
+        process.exit(0);
+    }
+);
 
