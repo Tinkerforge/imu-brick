@@ -1,12 +1,11 @@
-var IPConnection = require('Tinkerforge/IPConnection');
-var BrickIMU = require('Tinkerforge/BrickIMU');
+var Tinkerforge = require('tinkerforge');
 
 var HOST = 'localhost';
 var PORT = 4223;
 var UID = '6QFQff';// Change to your UID
 
-var ipcon = new IPConnection();// Create IP connection
-var imu = new BrickIMU(UID, ipcon);// Create device object
+var ipcon = new Tinkerforge.IPConnection();// Create IP connection
+var imu = new Tinkerforge.BrickIMU(UID, ipcon);// Create device object
 
 ipcon.connect(HOST, PORT,
     function(error) {
@@ -15,7 +14,7 @@ ipcon.connect(HOST, PORT,
 );// Connect to brickd
 
 // Don't use device before ipcon is connected
-ipcon.on(IPConnection.CALLBACK_CONNECTED,
+ipcon.on(Tinkerforge.IPConnection.CALLBACK_CONNECTED,
     function(connectReason) {
         // Set period for quaternion callback to 1s
         imu.setQuaternionPeriod(1000);
@@ -23,7 +22,7 @@ ipcon.on(IPConnection.CALLBACK_CONNECTED,
 );
 
 // Register quaternion callback
-imu.on(BrickIMU.CALLBACK_QUATERNION,
+imu.on(Tinkerforge.BrickIMU.CALLBACK_QUATERNION,
     // Quaternion callback
     function(x, y, z, w) {
         console.log('x: '+x);
