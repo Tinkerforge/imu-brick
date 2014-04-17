@@ -18,13 +18,13 @@ function matlab_example_callback
     imu.setQuaternionPeriod(1000);
 
     % Register quaternion callback to function cb_quaternion
-    set(imu, 'QuaternionCallback', @(h, e)cb_quaternion(e));
+    set(imu, 'QuaternionCallback', @(h, e) cb_quaternion(e));
 
-    input('\nPress any key to exit...\n', 's');
+    input('Press any key to exit...\n', 's');
     ipcon.disconnect();
 end
 
 % Callback function for quaternion callback
-function cb_quaternion(quaternion)
-    fprintf('x: %f\ny: %f\nz: %f\nw: %f\n', quaternion.x, quaternion.y, quaternion.z, quaternion.w);
+function cb_quaternion(e)
+    fprintf('x: %f\ny: %f\nz: %f\nw: %f\n', e.x, e.y, e.z, e.w);
 end

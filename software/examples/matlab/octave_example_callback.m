@@ -16,17 +16,17 @@ function octave_example_callback
     %       quaternion has changed since the last call!
     imu.setQuaternionPeriod(1000);
 
-    % Register position callback to function cb_position
-    imu.addQuaternionListener("cb_quaternion");
+    % Register quaternion callback to function cb_quaternion
+    imu.addQuaternionCallback(@cb_quaternion);
 
-    input("\nPress any key to exit...\n", "s");
+    input("Press any key to exit...\n", "s");
     ipcon.disconnect();
 end
 
 % Callback function for quaternion callback
-function cb_quaternion(x, y ,z, w)
-    fprintf("x: %s \n", x.toString());
-    fprintf("y: %s \n", y.toString());
-    fprintf("z: %s \n", z.toString());
-    fprintf("w: %s \n", w.toString());
+function cb_quaternion(e)
+    fprintf("x: %s \n", e.x.toString());
+    fprintf("y: %s \n", e.y.toString());
+    fprintf("z: %s \n", e.z.toString());
+    fprintf("w: %s \n", e.w.toString());
 end
