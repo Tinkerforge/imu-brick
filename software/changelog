@@ -15,3 +15,4 @@
 2.0.2: Add orientation calculation on/off API, make i2c communication synchronous
 2.0.3: Use tick_task to detect usb connect/disconnect instead of interrupt (through bricklib)
 2.0.4: Remove USB hotplug support (through bricklib)
+2.3.0: Add support for new SPI protocol
