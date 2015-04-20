@@ -16,6 +16,7 @@ sub cb_quaternion
     print "y: $y\n";
     print "z: $z\n";
     print "w: $w\n";
+    print "\n";
 }
 
 my $ipcon = Tinkerforge::IPConnection->new(); # Create IP connection

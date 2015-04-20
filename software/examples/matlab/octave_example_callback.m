@@ -25,8 +25,9 @@ end
 
 % Callback function for quaternion callback
 function cb_quaternion(e)
-    fprintf("x: %s \n", e.x.toString());
-    fprintf("y: %s \n", e.y.toString());
-    fprintf("z: %s \n", e.z.toString());
-    fprintf("w: %s \n", e.w.toString());
+    fprintf("x: %s\n", e.x.toString());
+    fprintf("y: %s\n", e.y.toString());
+    fprintf("z: %s\n", e.z.toString());
+    fprintf("w: %s\n", e.w.toString());
+    fprintf("\n");
 end

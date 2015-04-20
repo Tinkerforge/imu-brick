@@ -26,5 +26,5 @@ end
 
 % Callback function for quaternion callback
 function cb_quaternion(e)
-    fprintf('x: %f\ny: %f\nz: %f\nw: %f\n', e.x, e.y, e.z, e.w);
+    fprintf('x: %f\ny: %f\nz: %f\nw: %f\n\n', e.x, e.y, e.z, e.w);
 end
