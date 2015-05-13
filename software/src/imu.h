@@ -44,6 +44,18 @@
 
 #define IMU_PERIOD_NUM                    6
 
+#define IMU_RANGE_ACC_2G                  0
+#define IMU_RANGE_ACC_4G                  1
+#define IMU_RANGE_ACC_8G                  2
+
+#define IMU_RANGE_MAG_1_3                 1
+#define IMU_RANGE_MAG_1_9                 2
+#define IMU_RANGE_MAG_2_5                 3
+#define IMU_RANGE_MAG_4_0                 4
+#define IMU_RANGE_MAG_4_7                 5
+#define IMU_RANGE_MAG_5_6                 6
+#define IMU_RANGE_MAG_8_1                 7
+
 #define IMU_STARTUP_TIME                  70 // 70ms for startup
 
 // LSM Address
@@ -333,6 +345,9 @@ void imu_set_register(const uint16_t addr, const uint16_t reg, const uint8_t val
 
 void imu_save_calibration(const IMUCalibrationNonConst *icnc);
 void imu_fill_calibration(IMUCalibrationNonConst *icnc);
+
+void imu_update_range_acc(void);
+void imu_update_range_mag(void);
 
 void imu_init(void);
 int16_t two_complement_12_to_16(const int16_t value);

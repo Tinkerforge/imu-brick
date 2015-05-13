@@ -115,6 +115,8 @@ bool imu_use_orientation = true;
 bool imu_mode_update = true;
 Async imu_async;
 uint8_t imu_sensor_data[8] = {0};
+uint8_t imu_range_acc = IMU_RANGE_ACC_2G;
+uint8_t imu_range_mag = IMU_RANGE_MAG_1_3;
 
 extern Twid twid;
 extern Mutex mutex_twi_bricklet;
@@ -444,6 +446,12 @@ void callback_accelerometer(Async *a) {
 	              ic->imu_acc_z_bias)*
 	              ic->imu_acc_z_gain_multiplier)/ic->imu_acc_z_gain_divider;
 
+	switch(imu_range_acc) {
+		case IMU_RANGE_ACC_2G: break;
+		case IMU_RANGE_ACC_4G: imu_acc_x*=2; imu_acc_y*=2; imu_acc_z*=2; break;
+		case IMU_RANGE_ACC_8G: imu_acc_x*=4; imu_acc_y*=4; imu_acc_z*=4; break;
+	}
+
 	if(a != NULL) {
 		imu_async.callback = callback_magnetometer;
 		TWID_Read(&twid,
@@ -468,6 +476,41 @@ void callback_magnetometer(Async *a) {
 	             ic->imu_mag_y_gain_divider;
 	imu_mag_z = (( z + ic->imu_mag_z_bias)*ic->imu_mag_z_gain_multiplier)/
 	             ic->imu_mag_z_gain_divider;
+
+	switch(imu_range_mag) {
+		case IMU_RANGE_MAG_1_3:
+			break;
+		case IMU_RANGE_MAG_1_9:
+			imu_mag_x = imu_mag_x*19/13;
+			imu_mag_y = imu_mag_y*19/13;
+			imu_mag_z = imu_mag_z*19/13;
+			break;
+		case IMU_RANGE_MAG_2_5:
+			imu_mag_x = imu_mag_x*25/13;
+			imu_mag_y = imu_mag_y*25/13;
+			imu_mag_z = imu_mag_z*25/13;
+			break;
+		case IMU_RANGE_MAG_4_0:
+			imu_mag_x = imu_mag_x*40/13;
+			imu_mag_y = imu_mag_y*40/13;
+			imu_mag_z = imu_mag_z*40/13;
+			break;
+		case IMU_RANGE_MAG_4_7:
+			imu_mag_x = imu_mag_x*47/13;
+			imu_mag_y = imu_mag_y*47/13;
+			imu_mag_z = imu_mag_z*47/13;
+			break;
+		case IMU_RANGE_MAG_5_6:
+			imu_mag_x = imu_mag_x*56/13;
+			imu_mag_y = imu_mag_y*56/13;
+			imu_mag_z = imu_mag_z*56/13;
+			break;
+		case IMU_RANGE_MAG_8_1:
+			imu_mag_x = imu_mag_x*81/13;
+			imu_mag_y = imu_mag_y*81/13;
+			imu_mag_z = imu_mag_z*81/13;
+			break;
+	}
 
 	if(a != NULL) {
 		imu_async.callback = callback_gyroscope;
@@ -594,6 +637,18 @@ int16_t two_complement_12_to_16(const int16_t value) {
 	}
 
 	return value;
+}
+
+void imu_update_range_acc(void) {
+	imu_set_register(LSM_I2C_ACC_ADDRESS,
+	                 LSM_REGISTER_ACC_CTRL4,
+	                 imu_range_acc << 4);
+}
+
+void imu_update_range_mag(void) {
+	imu_set_register(LSM_I2C_MAG_ADDRESS,
+	                 LSM_REGISTER_MAG_CRB,
+	                 imu_range_mag << 5);
 }
 
 void imu_init(void) {

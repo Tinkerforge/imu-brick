@@ -16,3 +16,4 @@
 2.0.3: Use tick_task to detect usb connect/disconnect instead of interrupt (through bricklib)
 2.0.4: Remove USB hotplug support (through bricklib)
 2.3.0: Add support for new SPI protocol
+2.3.1: Implement set/get acceleration/magnetometer range
