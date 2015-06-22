@@ -3,7 +3,7 @@ function octave_example_callback()
     
     HOST = "localhost";
     PORT = 4223;
-    UID = "6QFQff"; % Change to your UID
+    UID = "6rJFq7"; % Change to your UID
 
     ipcon = java_new("com.tinkerforge.IPConnection"); % Create IP connection
     imu = java_new("com.tinkerforge.BrickIMU", UID, ipcon); % Create device object
@@ -25,9 +25,5 @@ end
 
 % Callback function for quaternion callback
 function cb_quaternion(e)
-    fprintf("x: %s\n", e.x.toString());
-    fprintf("y: %s\n", e.y.toString());
-    fprintf("z: %s\n", e.z.toString());
-    fprintf("w: %s\n", e.w.toString());
-    fprintf("\n");
+    fprintf('x: %f\ny: %f\nz: %f\nw: %f\n\n', e.x, e.y, e.z, e.w);
 end

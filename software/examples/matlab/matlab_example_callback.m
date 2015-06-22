@@ -4,7 +4,7 @@ function matlab_example_callback()
 
     HOST = 'localhost';
     PORT = 4223;
-    UID = '6QFQff'; % Change to your UID
+    UID = '6rJFq7'; % Change to your UID
 
     ipcon = IPConnection(); % Create IP connection
     imu = BrickIMU(UID, ipcon); % Create device object

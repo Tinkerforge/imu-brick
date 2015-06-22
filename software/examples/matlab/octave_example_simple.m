@@ -3,7 +3,7 @@ function octave_example_simple()
 
     HOST = "localhost";
     PORT = 4223;
-    UID = "6JpHZL"; % Change to your UID
+    UID = "6rJFq7"; % Change to your UID
 
     ipcon = java_new("com.tinkerforge.IPConnection"); % Create IP connection
     imu = java_new("com.tinkerforge.BrickIMU", UID, ipcon); % Create device object
@@ -13,10 +13,10 @@ function octave_example_simple()
 
     % Get current quaternion
     q = imu.getQuaternion();
-    fprintf("x: %g\n", q.x);
-    fprintf("y: %g\n", q.y);
-    fprintf("z: %g\n", q.z);
-    fprintf("w: %g\n", q.w);
+    fprintf("x: %f\n", q.x);
+    fprintf("y: %f\n", q.y);
+    fprintf("z: %f\n", q.z);
+    fprintf("w: %f\n", q.w);
 
     input("Press any key to exit...\n", "s");
     ipcon.disconnect();
