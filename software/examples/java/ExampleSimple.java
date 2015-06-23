@@ -16,7 +16,7 @@ public class ExampleSimple {
 		ipcon.connect(HOST, PORT); // Connect to brickd
 		// Don't use device before ipcon is connected
 
-		// Get current color
+		// Get current quaternion
 		Quaternion q = imu.getQuaternion(); // Can throw com.tinkerforge.TimeoutException
 
 		System.out.println("x: " + q.x);
