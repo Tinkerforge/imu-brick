@@ -3,10 +3,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[         0,          0]
-NotebookDataLength[      5565,        136]
-NotebookOptionsPosition[      5132,        115]
-NotebookOutlinePosition[      5471,        130]
-CellTagsIndexPosition[      5428,        127]
+NotebookDataLength[      5517,        128]
+NotebookOptionsPosition[      5084,        107]
+NotebookOutlinePosition[      5423,        122]
+CellTagsIndexPosition[      5380,        119]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -53,35 +53,27 @@ Cell[BoxData[{
    RowBox[{"x", "=", "0"}], ";", 
    RowBox[{"y", "=", "0"}], ";", 
    RowBox[{"z", "=", "0"}], ";", 
-   RowBox[{"w", "=", "0"}]}], "\n", "\n", 
+   RowBox[{"w", "=", "0"}]}], "\n", "\[IndentingNewLine]", 
   RowBox[{"(*", " ", 
-   RowBox[{"Get", " ", "current", " ", "quaternion"}], " ", 
-   "*)"}]}], "\[IndentingNewLine]", 
+   RowBox[{"Get", " ", "current", " ", "quaternion"}], " ", "*)"}]}], "\n", 
  RowBox[{"imu", "@", 
   RowBox[{"GetQuaternion", "[", 
    RowBox[{"x", ",", "y", ",", "z", ",", "w"}], 
    "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"Print", "[", 
+  RowBox[{"\"\<x: \>\"", "<>", 
+   RowBox[{"ToString", "[", "x", "]"}]}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"Print", "[", 
+  RowBox[{"\"\<y: \>\"", "<>", 
+   RowBox[{"ToString", "[", "y", "]"}]}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"Print", "[", 
+  RowBox[{"\"\<z: \>\"", "<>", 
+   RowBox[{"ToString", "[", "z", "]"}]}], "]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"Print", "[", 
-   RowBox[{"\"\<x: \>\"", "<>", 
-    RowBox[{"ToString", "[", "x", "]"}]}], "]"}], 
-  ";"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{"Print", "[", 
-   RowBox[{"\"\<y: \>\"", "<>", 
-    RowBox[{"ToString", "[", "y", "]"}]}], "]"}], 
-  ";"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{"Print", "[", 
-   RowBox[{"\"\<z: \>\"", "<>", 
-    RowBox[{"ToString", "[", "z", "]"}]}], "]"}], 
-  ";"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{
-   RowBox[{"Print", "[", 
-    RowBox[{"\"\<w: \>\"", "<>", 
-     RowBox[{"ToString", "[", "w", "]"}]}], "]"}], ";"}], 
-  "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"\"\<w: \>\"", "<>", 
+    RowBox[{"ToString", "[", "w", "]"}]}], "]"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
   RowBox[{"(*", " ", 
    RowBox[{"Clean", " ", "up"}], " ", "*)"}]}], "\[IndentingNewLine]", 
  RowBox[{"ipcon", "@", 
@@ -111,10 +103,10 @@ Cell[BoxData[{
    3.61622128134645*^9}, {3.616221877034163*^9, 3.6162218916339006`*^9}, 
    3.616222458174696*^9, {3.6162224928047867`*^9, 3.61622249369626*^9}, {
    3.643537626590209*^9, 3.643537683422666*^9}, {3.6435377465746717`*^9, 
-   3.643537747120421*^9}}]
+   3.643537747120421*^9}, {3.644061262346484*^9, 3.644061263645143*^9}}]
 },
 WindowSize->{1521, 867},
-WindowMargins->{{Automatic, 158}, {53, Automatic}},
+WindowMargins->{{Automatic, 157}, {52, Automatic}},
 FrontEndVersion->"9.0 for Linux x86 (64-bit) (November 20, 2012)",
 StyleDefinitions->"Default.nb"
 ]
@@ -130,7 +122,7 @@ CellTagsIndex->{}
 (*NotebookFileOutline
 Notebook[{
 Cell[400, 13, 702, 12, 55, "Input"],
-Cell[1105, 27, 4023, 86, 495, "Input"]
+Cell[1105, 27, 3975, 78, 495, "Input"]
 }
 ]
 *)

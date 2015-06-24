@@ -4,5 +4,5 @@
 # change to your UID
 uid=XYZ
 
-# get current color
+# get current quaternion
 tinkerforge call imu-brick $uid get-quaternion

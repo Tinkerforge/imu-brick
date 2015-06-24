@@ -14,10 +14,10 @@ x=0;y=0;z=0;w=0
 
 (* Get current quaternion *)
 imu@GetQuaternion[x,y,z,w]
-Print["x: "<>ToString[x]];
-Print["y: "<>ToString[y]];
-Print["z: "<>ToString[z]];
-Print["w: "<>ToString[w]];
+Print["x: "<>ToString[x]]
+Print["y: "<>ToString[y]]
+Print["z: "<>ToString[z]]
+Print["w: "<>ToString[w]]
 
 (* Clean up *)
 ipcon@Disconnect[]
