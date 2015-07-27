@@ -5,7 +5,7 @@
 
 #define HOST "localhost"
 #define PORT 4223
-#define UID "ayQskyoNrCW" // Change to your UID
+#define UID "XYZ" // Change to your UID
 
 // Quaternion callback
 void cb_quaternion(float x, float y, float z, float w, void *user_data) {
@@ -21,7 +21,7 @@ int main() {
 
 	// Create device object
 	IMU imu;
-	imu_create(&imu, UID, &ipcon); 
+	imu_create(&imu, UID, &ipcon);
 
 	// Connect to brickd
 	if(ipcon_connect(&ipcon, HOST, PORT) < 0) {

@@ -4,7 +4,7 @@ class Example
 {
 	private static string HOST = "localhost";
 	private static int PORT = 4223;
-	private static string UID = "ayQskyoNrCW"; // Change to your UID
+	private static string UID = "XYZ"; // Change to your UID
 
 	// Quaternion callback
 	static void QuaternionCB(BrickIMU sender, float x, float y, float z, float w)
@@ -16,7 +16,7 @@ class Example
 		System.Console.WriteLine("");
 	}
 
-	static void Main() 
+	static void Main()
 	{
 		IPConnection ipcon = new IPConnection(); // Create IP connection
 		BrickIMU imu = new BrickIMU(UID, ipcon); // Create device object
