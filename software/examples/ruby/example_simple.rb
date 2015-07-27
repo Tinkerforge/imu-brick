@@ -17,11 +17,11 @@ ipcon.connect HOST, PORT # Connect to brickd
 # Don't use device before ipcon is connected
 
 # Get current quaternion (returned as array [x, y, z, w])
-q = imu.get_quaternion
-puts "x: #{q[0]}"
-puts "y: #{q[1]}"
-puts "z: #{q[2]}"
-puts "w: #{q[3]}"
+quaternion = imu.get_quaternion
+puts "x: #{quaternion[0]}"
+puts "y: #{quaternion[1]}"
+puts "z: #{quaternion[2]}"
+puts "w: #{quaternion[3]}"
 
 puts 'Press key to exit'
 $stdin.gets
