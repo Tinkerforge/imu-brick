@@ -1,19 +1,57 @@
-1.0.0: Initial version
-1.0.1: Use quaternion instead of magnetometer for direction leds
-1.0.2: Fix bug with timeouts on windows (through bricklib)
-1.0.3: Fix bug with ADC calibration readout (through bricklib)
-1.0.4: Remove catching up of list signal messages (for chibi)
-1.0.5: Fix wrong defines (see issue #1 on github)
-1.0.6: Use better compass approximation
-1.0.7: Add get_chip_temperature and reset function
-1.0.8: Add USB hotplug support (through bricklib)
-1.0.9: Set Interrupt pins to input default (otherwise they can interfere with WIFI)	
-1.0.10: Change Bricklet Context size from 250 to 256 (through bricklib)
-1.0.11: Return correctly from interrupt (fixes bug related to GPS Bricklet)
-2.0.0: Support for protocol 2.0
-2.0.1: Add watchdog timer (restart after 16s of "deadlock")
-2.0.2: Add orientation calculation on/off API, make i2c communication synchronous
-2.0.3: Use tick_task to detect usb connect/disconnect instead of interrupt (through bricklib)
-2.0.4: Remove USB hotplug support (through bricklib)
-2.3.0: Add support for new SPI protocol
-2.3.1: Implement set/get acceleration/magnetometer range
+1.0.0:
+- Initial version
+
+1.0.1:
+- Use quaternion instead of magnetometer for direction LEDs
+
+1.0.2:
+- Fix bug with timeouts on Windows (through bricklib)
+
+1.0.3:
+- Fix bug with ADC calibration readout (through bricklib)
+
+1.0.4:
+- Remove catching up of list signal messages (for chibi)
+
+1.0.5:
+- Fix wrong defines (see issue #1 on GitHub)
+
+1.0.6:
+- Use better compass approximation
+
+1.0.7:
+- Add get_chip_temperature and reset function
+
+1.0.8:
+- Add USB hotplug support (through bricklib)
+
+1.0.9:
+- Set interrupt pins to input default (otherwise they can interfere with WIFI)
+
+1.0.10:
+- Change Bricklet Context size from 250 to 256 (through bricklib)
+
+1.0.11:
+- Return correctly from interrupt (fixes bug related to GPS Bricklet)
+
+2.0.0:
+- Support for Protocol 2.0
+
+2.0.1:
+- Add watchdog timer (restart after 16s of "deadlock")
+
+2.0.2:
+- Add orientation calculation on/off API, make I2C communication synchronous
+
+2.0.3:
+- Use tick_task to detect USB connect/disconnect instead of interrupt
+  (through bricklib)
+
+2.0.4:
+- Remove USB hotplug support (through bricklib)
+
+2.3.0:
+- Add support for new SPI protocol
+
+2.3.1:
+- Implement set/get acceleration/magnetometer range
