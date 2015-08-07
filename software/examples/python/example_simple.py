@@ -6,11 +6,11 @@ PORT = 4223
 UID = "XYZ" # Change to your UID
 
 from tinkerforge.ip_connection import IPConnection
-from tinkerforge.brick_imu import IMU
+from tinkerforge.brick_imu import BrickIMU
 
 if __name__ == "__main__":
     ipcon = IPConnection() # Create IP connection
-    imu = IMU(UID, ipcon) # Create device object
+    imu = BrickIMU(UID, ipcon) # Create device object
 
     ipcon.connect(HOST, PORT) # Connect to brickd
     # Don't use device before ipcon is connected
