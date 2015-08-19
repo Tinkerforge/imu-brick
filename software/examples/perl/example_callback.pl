@@ -1,11 +1,11 @@
-#!/usr/bin/perl  
+#!/usr/bin/perl
 
 use Tinkerforge::IPConnection;
 use Tinkerforge::BrickIMU;
 
 use constant HOST => 'localhost';
 use constant PORT => 4223;
-use constant UID => '6R4m4d'; # Change to your UID
+use constant UID => 'XYZ'; # Change to your UID
 
 # Quaternion callback
 sub cb_quaternion
