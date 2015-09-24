@@ -3,7 +3,7 @@
 
 HOST = "localhost"
 PORT = 4223
-UID = "XYZ" # Change to your UID
+UID = "XXYYZZ" # Change to your UID
 
 from tinkerforge.ip_connection import IPConnection
 from tinkerforge.brick_imu import BrickIMU
@@ -18,7 +18,10 @@ if __name__ == "__main__":
     # Get current quaternion
     x, y, z, w = imu.get_quaternion()
 
-    print("x: " + str(x) + "\ny: " + str(y) + "\nz: " + str(z) + "\nw: " + str(w))
+    print("Quaternion[X]: " + str(x))
+    print("Quaternion[Y]: " + str(y))
+    print("Quaternion[Z]: " + str(z))
+    print("Quaternion[W]: " + str(w))
 
-    raw_input('Press key to exit\n') # Use input() in Python 3
+    raw_input("Press key to exit\n") # Use input() in Python 3
     ipcon.disconnect()

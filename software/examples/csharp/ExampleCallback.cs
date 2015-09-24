@@ -1,19 +1,20 @@
+using System;
 using Tinkerforge;
 
 class Example
 {
 	private static string HOST = "localhost";
 	private static int PORT = 4223;
-	private static string UID = "XYZ"; // Change to your UID
+	private static string UID = "XXYYZZ"; // Change to your UID
 
-	// Quaternion callback
+	// Callback function for quaternion callback
 	static void QuaternionCB(BrickIMU sender, float x, float y, float z, float w)
 	{
-		System.Console.WriteLine("x: " + x);
-		System.Console.WriteLine("y: " + y);
-		System.Console.WriteLine("z: " + z);
-		System.Console.WriteLine("w: " + w);
-		System.Console.WriteLine("");
+		Console.WriteLine("Quaternion[X]: " + x);
+		Console.WriteLine("Quaternion[Y]: " + y);
+		Console.WriteLine("Quaternion[Z]: " + z);
+		Console.WriteLine("Quaternion[W]: " + w);
+		Console.WriteLine("");
 	}
 
 	static void Main()
@@ -24,14 +25,16 @@ class Example
 		ipcon.Connect(HOST, PORT); // Connect to brickd
 		// Don't use device before ipcon is connected
 
-		// Set period for quaternion callback to 1s
-		imu.SetQuaternionPeriod(1000);
-
-		// Register quaternion callback to QuaternionCB
+		// Register quaternion callback to function QuaternionCB
 		imu.Quaternion += QuaternionCB;
 
-		System.Console.WriteLine("Press enter to exit");
-		System.Console.ReadLine();
+		// Set period for quaternion callback to 1s (1000ms)
+		// Note: The quaternion callback is only called every second
+		//       if the quaternion has changed since the last call!
+		imu.SetQuaternionPeriod(1000);
+
+		Console.WriteLine("Press enter to exit");
+		Console.ReadLine();
 		ipcon.Disconnect();
 	}
 }

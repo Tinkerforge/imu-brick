@@ -18,7 +18,7 @@ type
 const
   HOST = 'localhost';
   PORT = 4223;
-  UID = 'XYZ'; { Change to your UID }
+  UID = 'XXYYZZ'; { Change to your UID }
 
 var
   e: TExample;
@@ -38,10 +38,11 @@ begin
 
   { Get current quaternion }
   imu.GetQuaternion(x, y, z, w);
-  WriteLn(Format('x: %.6f', [x]));
-  WriteLn(Format('y: %.6f', [y]));
-  WriteLn(Format('z: %.6f', [z]));
-  WriteLn(Format('w: %.6f', [w]));
+
+  WriteLn(Format('Quaternion[X]: %f', [x]));
+  WriteLn(Format('Quaternion[Y]: %f', [y]));
+  WriteLn(Format('Quaternion[Z]: %f', [z]));
+  WriteLn(Format('Quaternion[W]: %f', [w]));
 
   WriteLn('Press key to exit');
   ReadLn;

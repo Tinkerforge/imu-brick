@@ -5,13 +5,17 @@
 
 #define HOST "localhost"
 #define PORT 4223
-#define UID "XYZ" // Change to your UID
+#define UID "XXYYZZ" // Change to your UID
 
-// Quaternion callback
+// Callback function for quaternion callback
 void cb_quaternion(float x, float y, float z, float w, void *user_data) {
 	(void)user_data; // avoid unused parameter warning
 
-	printf("x: %f\ny: %f\nz: %f\nw: %f\n\n", x, y, z, w);
+	printf("Quaternion[X]: %f\n", x);
+	printf("Quaternion[Y]: %f\n", y);
+	printf("Quaternion[Z]: %f\n", z);
+	printf("Quaternion[W]: %f\n", w);
+	printf("\n");
 }
 
 int main(void) {
@@ -30,14 +34,16 @@ int main(void) {
 	}
 	// Don't use device before ipcon is connected
 
-	// Set period for quaternion callback to 1s
-	imu_set_quaternion_period(&imu, 1000);
-
-	// Register "quaternion callback" to cb_quaternion
+	// Register quaternion callback to function cb_quaternion
 	imu_register_callback(&imu,
 	                      IMU_CALLBACK_QUATERNION,
 	                      (void *)cb_quaternion,
 	                      NULL);
+
+	// Set period for quaternion callback to 1s (1000ms)
+	// Note: The quaternion callback is only called every second
+	//       if the quaternion has changed since the last call!
+	imu_set_quaternion_period(&imu, 1000);
 
 	printf("Press key to exit\n");
 	getchar();

@@ -4,7 +4,7 @@ function matlab_example_simple()
 
     HOST = 'localhost';
     PORT = 4223;
-    UID = '6rJFq7'; % Change to your UID
+    UID = 'XXYYZZ'; % Change to your UID
 
     ipcon = IPConnection(); % Create IP connection
     imu = BrickIMU(UID, ipcon); % Create device object
@@ -14,11 +14,12 @@ function matlab_example_simple()
 
     % Get current quaternion
     quaternion = imu.getQuaternion();
-    fprintf("x: %f\n", quaternion.x);
-    fprintf("y: %f\n", quaternion.y);
-    fprintf("z: %f\n", quaternion.z);
-    fprintf("w: %f\n", quaternion.w);
 
-    input('Press any key to exit...\n', 's');
+    fprintf('Quaternion[X]: %f\n', quaternion.x);
+    fprintf('Quaternion[Y]: %f\n', quaternion.y);
+    fprintf('Quaternion[Z]: %f\n', quaternion.z);
+    fprintf('Quaternion[W]: %f\n', quaternion.w);
+
+    input('Press key to exit\n', 's');
     ipcon.disconnect();
 end

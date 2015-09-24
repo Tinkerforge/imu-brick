@@ -8,7 +8,7 @@ use Tinkerforge\BrickIMU;
 
 const HOST = 'localhost';
 const PORT = 4223;
-const UID = '6JpHZL'; // Change to your UID
+const UID = 'XXYYZZ'; // Change to your UID
 
 $ipcon = new IPConnection(); // Create IP connection
 $imu = new BrickIMU(UID, $ipcon); // Create device object
@@ -17,12 +17,12 @@ $ipcon->connect(HOST, PORT); // Connect to brickd
 // Don't use device before ipcon is connected
 
 // Get current quaternion
-$q = $imu->getquaternion();
+$quaternion = $imu->getQuaternion();
 
-echo "x: ".$q['x']."\n";
-echo "y: ".$q['y']."\n";
-echo "z: ".$q['z']."\n";
-echo "w: ".$q['w']."\n";
+echo "Quaternion[X]: " . $quaternion['x'] . "\n";
+echo "Quaternion[Y]: " . $quaternion['y'] . "\n";
+echo "Quaternion[Z]: " . $quaternion['z'] . "\n";
+echo "Quaternion[W]: " . $quaternion['w'] . "\n";
 
 echo "Press key to exit\n";
 fgetc(fopen('php://stdin', 'r'));

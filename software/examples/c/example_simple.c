@@ -5,7 +5,7 @@
 
 #define HOST "localhost"
 #define PORT 4223
-#define UID "XYZ" // Change to your UID
+#define UID "XXYYZZ" // Change to your UID
 
 int main(void) {
 	// Create IP connection
@@ -30,7 +30,10 @@ int main(void) {
 		return 1;
 	}
 
-	printf("x: %f\ny: %f\nz: %f\nw: %f\n", x, y, z, w);
+	printf("Quaternion[X]: %f\n", x);
+	printf("Quaternion[Y]: %f\n", y);
+	printf("Quaternion[Z]: %f\n", z);
+	printf("Quaternion[W]: %f\n", w);
 
 	printf("Press key to exit\n");
 	getchar();

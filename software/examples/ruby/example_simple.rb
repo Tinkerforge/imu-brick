@@ -8,7 +8,7 @@ include Tinkerforge
 
 HOST = 'localhost'
 PORT = 4223
-UID = 'XYZ' # Change to your UID
+UID = 'XXYYZZ' # Change to your UID
 
 ipcon = IPConnection.new # Create IP connection
 imu = BrickIMU.new UID, ipcon # Create device object
@@ -16,12 +16,13 @@ imu = BrickIMU.new UID, ipcon # Create device object
 ipcon.connect HOST, PORT # Connect to brickd
 # Don't use device before ipcon is connected
 
-# Get current quaternion (returned as array [x, y, z, w])
+# Get current quaternion (returned as [x, y, z, w])
 quaternion = imu.get_quaternion
-puts "x: #{quaternion[0]}"
-puts "y: #{quaternion[1]}"
-puts "z: #{quaternion[2]}"
-puts "w: #{quaternion[3]}"
+
+puts "Quaternion[X]: #{quaternion[0]}"
+puts "Quaternion[Y]: #{quaternion[1]}"
+puts "Quaternion[Z]: #{quaternion[2]}"
+puts "Quaternion[W]: #{quaternion[3]}"
 
 puts 'Press key to exit'
 $stdin.gets

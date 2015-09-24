@@ -12,29 +12,27 @@ type
     ipcon: TIPConnection;
     imu: TBrickIMU;
   public
-    procedure QuaternionCB(sender: TBrickIMU; 
-                           const x: single; const y: single;
-                           const z: single; const w: single);
+    procedure QuaternionCB(sender: TBrickIMU;
+                           const x: single; const y: single; const z: single; const w: single);
     procedure Execute;
   end;
 
 const
   HOST = 'localhost';
   PORT = 4223;
-  UID = 'XYZ'; { Change to your UID }
+  UID = 'XXYYZZ'; { Change to your UID }
 
 var
   e: TExample;
 
-{ Quaternion callback }
-procedure TExample.QuaternionCB(sender: TBrickIMU; 
-                                const x: single; const y: single;
-                                const z: single; const w: single);
+{ Callback procedure for quaternion callback }
+procedure TExample.QuaternionCB(sender: TBrickIMU;
+                                const x: single; const y: single; const z: single; const w: single);
 begin
-  WriteLn(Format('x: %.6f', [x]));
-  WriteLn(Format('y: %.6f', [y]));
-  WriteLn(Format('z: %.6f', [z]));
-  WriteLn(Format('w: %.6f', [w]));
+  WriteLn(Format('Quaternion[X]: %f', [x]));
+  WriteLn(Format('Quaternion[Y]: %f', [y]));
+  WriteLn(Format('Quaternion[Z]: %f', [z]));
+  WriteLn(Format('Quaternion[W]: %f', [w]));
   WriteLn('');
 end;
 
@@ -50,11 +48,13 @@ begin
   ipcon.Connect(HOST, PORT);
   { Don't use device before ipcon is connected }
 
-  { Set period for quaternion callback to 1s }
-  imu.SetQuaternionPeriod(1000);
-
-  { Register "quaternion callback" to procedure QuaternionCB }
+  { Register quaternion callback to procedure QuaternionCB }
   imu.OnQuaternion := {$ifdef FPC}@{$endif}QuaternionCB;
+
+  { Set period for quaternion callback to 1s (1000ms)
+    Note: The quaternion callback is only called every second
+          if the quaternion has changed since the last call! }
+  imu.SetQuaternionPeriod(1000);
 
   WriteLn('Press key to exit');
   ReadLn;

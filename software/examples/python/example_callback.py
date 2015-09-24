@@ -3,14 +3,18 @@
 
 HOST = "localhost"
 PORT = 4223
-UID = "XYZ" # Change to your UID
+UID = "XXYYZZ" # Change to your UID
 
 from tinkerforge.ip_connection import IPConnection
 from tinkerforge.brick_imu import BrickIMU
 
-# Quaternion callback
+# Callback function for quaternion callback
 def cb_quaternion(x, y, z, w):
-    print("x: " + str(x) + "\ny: " + str(y) + "\nz: " + str(z) + "\nw: " + str(w) + "\n")
+    print("Quaternion[X]: " + str(x))
+    print("Quaternion[Y]: " + str(y))
+    print("Quaternion[Z]: " + str(z))
+    print("Quaternion[W]: " + str(w))
+    print("")
 
 if __name__ == "__main__":
     ipcon = IPConnection() # Create IP connection
@@ -19,11 +23,13 @@ if __name__ == "__main__":
     ipcon.connect(HOST, PORT) # Connect to brickd
     # Don't use device before ipcon is connected
 
-    # Set period for quaternion callback to 1s
-    imu.set_quaternion_period(1000)
-
-    # Register quaternion callback
+    # Register quaternion callback to function cb_quaternion
     imu.register_callback(imu.CALLBACK_QUATERNION, cb_quaternion)
 
-    raw_input('Press key to exit\n') # Use input() in Python 3
+    # Set period for quaternion callback to 1s (1000ms)
+    # Note: The quaternion callback is only called every second
+    #       if the quaternion has changed since the last call!
+    imu.set_quaternion_period(1000)
+
+    raw_input("Press key to exit\n") # Use input() in Python 3
     ipcon.disconnect()
