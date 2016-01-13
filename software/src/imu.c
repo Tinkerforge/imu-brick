@@ -698,6 +698,11 @@ void imu_init(void) {
 }
 
 void imu_save_calibration(const IMUCalibrationNonConst *icnc) {
+	// TODO: Saving calibration currently only works on SAM3S processor family
+	if(!IS_SAM3()) {
+		return;
+	}
+
 	DISABLE_RESET_BUTTON();
 	__disable_irq();
 
