@@ -7,8 +7,8 @@ Module ExampleCallback
     Const UID As String = "XXYYZZ" ' Change to your UID
 
     ' Callback subroutine for quaternion callback
-    Sub QuaternionCB(ByVal sender As BrickIMU, _
-                     ByVal x As Single, ByVal y As Single, ByVal z As Single, ByVal w As Single)
+    Sub QuaternionCB(ByVal sender As BrickIMU, ByVal x As Single, ByVal y As Single, _
+                     ByVal z As Single, ByVal w As Single)
         Console.WriteLine("Quaternion[X]: " + x.ToString())
         Console.WriteLine("Quaternion[Y]: " + y.ToString())
         Console.WriteLine("Quaternion[Z]: " + z.ToString())
