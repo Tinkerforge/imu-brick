@@ -12,8 +12,8 @@ type
     ipcon: TIPConnection;
     imu: TBrickIMU;
   public
-    procedure QuaternionCB(sender: TBrickIMU; const x: single; const y: single; const z: single;
-                           const w: single);
+    procedure QuaternionCB(sender: TBrickIMU; const x: single; const y: single;
+                           const z: single; const w: single);
     procedure Execute;
   end;
 
