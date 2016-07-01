@@ -4,7 +4,7 @@ function matlab_example_simple()
 
     HOST = 'localhost';
     PORT = 4223;
-    UID = 'XXYYZZ'; % Change to your UID
+    UID = 'XXYYZZ'; % Change XXYYZZ to the UID of your IMU Brick
 
     ipcon = IPConnection(); % Create IP connection
     imu = handle(BrickIMU(UID, ipcon), 'CallbackProperties'); % Create device object

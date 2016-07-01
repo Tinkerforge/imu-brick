@@ -5,7 +5,7 @@ use Tinkerforge::BrickIMU;
 
 use constant HOST => 'localhost';
 use constant PORT => 4223;
-use constant UID => 'XXYYZZ'; # Change to your UID
+use constant UID => 'XXYYZZ'; # Change XXYYZZ to the UID of your IMU Brick
 
 # Callback subroutine for quaternion callback
 sub cb_quaternion

@@ -2,7 +2,7 @@ var Tinkerforge = require('tinkerforge');
 
 var HOST = 'localhost';
 var PORT = 4223;
-var UID = 'XXYYZZ'; // Change to your UID
+var UID = 'XXYYZZ'; // Change XXYYZZ to the UID of your IMU Brick
 
 var ipcon = new Tinkerforge.IPConnection(); // Create IP connection
 var imu = new Tinkerforge.BrickIMU(UID, ipcon); // Create device object
