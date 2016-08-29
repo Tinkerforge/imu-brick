@@ -56,5 +56,5 @@
 2015-07-27: 2.3.1 (92bb37e)
 - Implement set/get acceleration/magnetometer range
 
-2016-29-08: 2.3.2 (?)
+2016-08-29: 2.3.2 (442b1c7)
 - Make sure to use all chunks when writing firmware
