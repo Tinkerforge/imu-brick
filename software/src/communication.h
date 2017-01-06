@@ -68,6 +68,8 @@
 #define FID_ORIENTATION_CALCULATION_OFF 38
 #define FID_IS_ORIENTATION_CALCULATION_ON 39
 
+#define COM_MESSAGE_USER_LAST_FID 39
+
 #define COM_MESSAGES_USER \
 	{FID_GET_ACCELERATION, (message_handler_func_t)get_acceleration}, \
 	{FID_GET_MAGNETIC_FIELD, (message_handler_func_t)get_magnetic_field}, \
