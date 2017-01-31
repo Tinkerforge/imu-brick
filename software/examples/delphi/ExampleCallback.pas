@@ -51,9 +51,7 @@ begin
   { Register quaternion callback to procedure QuaternionCB }
   imu.OnQuaternion := {$ifdef FPC}@{$endif}QuaternionCB;
 
-  { Set period for quaternion callback to 1s (1000ms)
-    Note: The quaternion callback is only called every second
-          if the quaternion has changed since the last call! }
+  { Set period for quaternion callback to 1s (1000ms) }
   imu.SetQuaternionPeriod(1000);
 
   WriteLn('Press key to exit');

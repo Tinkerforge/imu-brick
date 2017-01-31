@@ -17,8 +17,6 @@ ipcon.connect(HOST, PORT,
 ipcon.on(Tinkerforge.IPConnection.CALLBACK_CONNECTED,
     function (connectReason) {
         // Set period for quaternion callback to 1s (1000ms)
-        // Note: The quaternion callback is only called every second
-        //       if the quaternion has changed since the last call!
         imu.setQuaternionPeriod(1000);
     }
 );

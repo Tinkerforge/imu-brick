@@ -27,8 +27,6 @@ if __name__ == "__main__":
     imu.register_callback(imu.CALLBACK_QUATERNION, cb_quaternion)
 
     # Set period for quaternion callback to 1s (1000ms)
-    # Note: The quaternion callback is only called every second
-    #       if the quaternion has changed since the last call!
     imu.set_quaternion_period(1000)
 
     raw_input("Press key to exit\n") # Use input() in Python 3
