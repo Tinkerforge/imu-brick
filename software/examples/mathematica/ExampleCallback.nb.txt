@@ -19,7 +19,7 @@ QuaternionCB[sender_,x_,y_,z_,w_]:=
   Print["Quaternion[W]: "<>ToString[w]]
  ]
 
-AddEventHandler[imu@Quaternion,QuaternionCB]
+AddEventHandler[imu@QuaternionCallback,QuaternionCB]
 
 (*Set period for quaternion callback to 1s (1000ms)*)
 imu@SetQuaternionPeriod[1000]

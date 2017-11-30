@@ -24,7 +24,7 @@ Module ExampleCallback
         ' Don't use device before ipcon is connected
 
         ' Register quaternion callback to subroutine QuaternionCB
-        AddHandler imu.Quaternion, AddressOf QuaternionCB
+        AddHandler imu.QuaternionCallback, AddressOf QuaternionCB
 
         ' Set period for quaternion callback to 1s (1000ms)
         imu.SetQuaternionPeriod(1000)
