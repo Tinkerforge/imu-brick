@@ -118,7 +118,7 @@ uint8_t imu_sensor_data[8] = {0};
 uint8_t imu_range_acc = IMU_RANGE_ACC_2G;
 uint8_t imu_range_mag = IMU_RANGE_MAG_1_3;
 
-extern Twid twid;
+extern Twid twid0;
 extern Mutex mutex_twi_bricklet;
 
 extern ComInfo com_info;
@@ -439,7 +439,7 @@ void callback_accelerometer(Async *a) {
 
 	if(a != NULL) {
 		imu_async.callback = callback_magnetometer;
-		TWID_Read(&twid,
+		TWID_Read(&twid0,
 				  LSM_I2C_MAG_ADDRESS,
 				  LSM_REGISTER_MAG_X_H,
 				  1,
@@ -499,7 +499,7 @@ void callback_magnetometer(Async *a) {
 
 	if(a != NULL) {
 		imu_async.callback = callback_gyroscope;
-		TWID_Read(&twid,
+		TWID_Read(&twid0,
 				  ITG_I2C_GYR_ADDRESS,
 				  ITG_REGISTER_TEMP_H,
 				  1,
@@ -563,7 +563,7 @@ void callback_gyroscope(Async *a) {
 
 void update_sensors_sync(void) {
 	mutex_take(mutex_twi_bricklet, MUTEX_BLOCKING);
-    TWID_Read(&twid,
+    TWID_Read(&twid0,
     		  LSM_I2C_ACC_ADDRESS,
     		  LSM_REGISTER_ACC_X_L | LSM_ACC_READ_INCREMENTAL,
               1,
@@ -572,7 +572,7 @@ void update_sensors_sync(void) {
               NULL);
     callback_accelerometer(NULL);
 
-	TWID_Read(&twid,
+	TWID_Read(&twid0,
 			  LSM_I2C_MAG_ADDRESS,
 			  LSM_REGISTER_MAG_X_H,
 			  1,
@@ -581,7 +581,7 @@ void update_sensors_sync(void) {
 			  NULL);
 	callback_magnetometer(NULL);
 
-	TWID_Read(&twid,
+	TWID_Read(&twid0,
 			  ITG_I2C_GYR_ADDRESS,
 			  ITG_REGISTER_TEMP_H,
 			  1,
@@ -595,7 +595,7 @@ void update_sensors_sync(void) {
 void update_sensors_async(void) {
 	mutex_take(mutex_twi_bricklet, MUTEX_BLOCKING);
 	imu_async.callback = callback_accelerometer;
-    TWID_Read(&twid,
+    TWID_Read(&twid0,
     		  LSM_I2C_ACC_ADDRESS,
     		  LSM_REGISTER_ACC_X_L | LSM_ACC_READ_INCREMENTAL,
               1,
