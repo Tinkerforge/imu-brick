@@ -19,10 +19,10 @@ $ipcon->connect(HOST, PORT); // Connect to brickd
 // Get current quaternion
 $quaternion = $imu->getQuaternion();
 
-echo "Quaternion[X]: " . $quaternion['x'] . "\n";
-echo "Quaternion[Y]: " . $quaternion['y'] . "\n";
-echo "Quaternion[Z]: " . $quaternion['z'] . "\n";
-echo "Quaternion[W]: " . $quaternion['w'] . "\n";
+echo "Quaternion [X]: " . $quaternion['x'] . "\n";
+echo "Quaternion [Y]: " . $quaternion['y'] . "\n";
+echo "Quaternion [Z]: " . $quaternion['z'] . "\n";
+echo "Quaternion [W]: " . $quaternion['w'] . "\n";
 
 echo "Press key to exit\n";
 fgetc(fopen('php://stdin', 'r'));

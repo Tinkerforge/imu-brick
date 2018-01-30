@@ -18,10 +18,10 @@ if __name__ == "__main__":
     # Get current quaternion
     x, y, z, w = imu.get_quaternion()
 
-    print("Quaternion[X]: " + str(x))
-    print("Quaternion[Y]: " + str(y))
-    print("Quaternion[Z]: " + str(z))
-    print("Quaternion[W]: " + str(w))
+    print("Quaternion [X]: " + str(x))
+    print("Quaternion [Y]: " + str(y))
+    print("Quaternion [Z]: " + str(z))
+    print("Quaternion [W]: " + str(w))
 
     raw_input("Press key to exit\n") # Use input() in Python 3
     ipcon.disconnect()

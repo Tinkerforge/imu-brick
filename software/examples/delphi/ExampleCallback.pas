@@ -29,10 +29,10 @@ var
 procedure TExample.QuaternionCB(sender: TBrickIMU; const x: single; const y: single;
                                 const z: single; const w: single);
 begin
-  WriteLn(Format('Quaternion[X]: %f', [x]));
-  WriteLn(Format('Quaternion[Y]: %f', [y]));
-  WriteLn(Format('Quaternion[Z]: %f', [z]));
-  WriteLn(Format('Quaternion[W]: %f', [w]));
+  WriteLn(Format('Quaternion [X]: %f', [x]));
+  WriteLn(Format('Quaternion [Y]: %f', [y]));
+  WriteLn(Format('Quaternion [Z]: %f', [z]));
+  WriteLn(Format('Quaternion [W]: %f', [w]));
   WriteLn('');
 end;
 

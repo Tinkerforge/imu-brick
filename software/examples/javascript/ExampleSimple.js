@@ -19,10 +19,10 @@ ipcon.on(Tinkerforge.IPConnection.CALLBACK_CONNECTED,
         // Get current quaternion
         imu.getQuaternion(
             function (x, y, z, w) {
-                console.log('Quaternion[X]: ' + x);
-                console.log('Quaternion[Y]: ' + y);
-                console.log('Quaternion[Z]: ' + z);
-                console.log('Quaternion[W]: ' + w);
+                console.log('Quaternion [X]: ' + x);
+                console.log('Quaternion [Y]: ' + y);
+                console.log('Quaternion [Z]: ' + z);
+                console.log('Quaternion [W]: ' + w);
             },
             function (error) {
                 console.log('Error: ' + error);

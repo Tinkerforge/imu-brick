@@ -39,10 +39,10 @@ begin
   { Get current quaternion }
   imu.GetQuaternion(x, y, z, w);
 
-  WriteLn(Format('Quaternion[X]: %f', [x]));
-  WriteLn(Format('Quaternion[Y]: %f', [y]));
-  WriteLn(Format('Quaternion[Z]: %f', [z]));
-  WriteLn(Format('Quaternion[W]: %f', [w]));
+  WriteLn(Format('Quaternion [X]: %f', [x]));
+  WriteLn(Format('Quaternion [Y]: %f', [y]));
+  WriteLn(Format('Quaternion [Z]: %f', [z]));
+  WriteLn(Format('Quaternion [W]: %f', [w]));
 
   WriteLn('Press key to exit');
   ReadLn;

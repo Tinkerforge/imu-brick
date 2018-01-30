@@ -18,10 +18,10 @@ ipcon.connect HOST, PORT # Connect to brickd
 
 # Register quaternion callback
 imu.register_callback(BrickIMU::CALLBACK_QUATERNION) do |x, y, z, w|
-  puts "Quaternion[X]: #{x}"
-  puts "Quaternion[Y]: #{y}"
-  puts "Quaternion[Z]: #{z}"
-  puts "Quaternion[W]: #{w}"
+  puts "Quaternion [X]: #{x}"
+  puts "Quaternion [Y]: #{y}"
+  puts "Quaternion [Z]: #{z}"
+  puts "Quaternion [W]: #{w}"
   puts ''
 end
 

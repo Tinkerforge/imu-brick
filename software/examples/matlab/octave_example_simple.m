@@ -14,10 +14,10 @@ function octave_example_simple()
     % Get current quaternion
     quaternion = imu.getQuaternion();
 
-    fprintf("Quaternion[X]: %f\n", quaternion.x);
-    fprintf("Quaternion[Y]: %f\n", quaternion.y);
-    fprintf("Quaternion[Z]: %f\n", quaternion.z);
-    fprintf("Quaternion[W]: %f\n", quaternion.w);
+    fprintf("Quaternion [X]: %f\n", quaternion.x);
+    fprintf("Quaternion [Y]: %f\n", quaternion.y);
+    fprintf("Quaternion [Z]: %f\n", quaternion.z);
+    fprintf("Quaternion [W]: %f\n", quaternion.w);
 
     input("Press key to exit\n", "s");
     ipcon.disconnect();

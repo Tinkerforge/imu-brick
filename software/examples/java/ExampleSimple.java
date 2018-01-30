@@ -21,10 +21,10 @@ public class ExampleSimple {
 		// Get current quaternion
 		Quaternion quaternion = imu.getQuaternion(); // Can throw com.tinkerforge.TimeoutException
 
-		System.out.println("Quaternion[X]: " + quaternion.x);
-		System.out.println("Quaternion[Y]: " + quaternion.y);
-		System.out.println("Quaternion[Z]: " + quaternion.z);
-		System.out.println("Quaternion[W]: " + quaternion.w);
+		System.out.println("Quaternion [X]: " + quaternion.x);
+		System.out.println("Quaternion [Y]: " + quaternion.y);
+		System.out.println("Quaternion [Z]: " + quaternion.z);
+		System.out.println("Quaternion [W]: " + quaternion.w);
 
 		System.out.println("Press key to exit"); System.in.read();
 		ipcon.disconnect();

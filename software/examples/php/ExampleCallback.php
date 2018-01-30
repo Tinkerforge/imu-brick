@@ -13,10 +13,10 @@ const UID = 'XXYYZZ'; // Change XXYYZZ to the UID of your IMU Brick
 // Callback function for quaternion callback
 function cb_quaternion($x, $y, $z, $w)
 {
-    echo "Quaternion[X]: $x\n";
-    echo "Quaternion[Y]: $y\n";
-    echo "Quaternion[Z]: $z\n";
-    echo "Quaternion[W]: $w\n";
+    echo "Quaternion [X]: $x\n";
+    echo "Quaternion [Y]: $y\n";
+    echo "Quaternion [Z]: $z\n";
+    echo "Quaternion [W]: $w\n";
     echo "\n";
 }
 

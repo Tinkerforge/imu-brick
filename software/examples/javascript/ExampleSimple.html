@@ -44,10 +44,10 @@
                         // Get current quaternion
                         imu.getQuaternion(
                             function (x, y, z, w) {
-                                textArea.value += 'Quaternion[X]: ' + x + '\n';
-                                textArea.value += 'Quaternion[Y]: ' + y + '\n';
-                                textArea.value += 'Quaternion[Z]: ' + z + '\n';
-                                textArea.value += 'Quaternion[W]: ' + w + '\n';
+                                textArea.value += 'Quaternion [X]: ' + x + '\n';
+                                textArea.value += 'Quaternion [Y]: ' + y + '\n';
+                                textArea.value += 'Quaternion [Z]: ' + z + '\n';
+                                textArea.value += 'Quaternion [W]: ' + w + '\n';
                             },
                             function (error) {
                                 textArea.value += 'Error: ' + error + '\n';

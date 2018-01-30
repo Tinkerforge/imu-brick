@@ -20,10 +20,10 @@ public class ExampleCallback {
 		// Add quaternion listener
 		imu.addQuaternionListener(new BrickIMU.QuaternionListener() {
 			public void quaternion(float x, float y, float z, float w) {
-				System.out.println("Quaternion[X]: " + x);
-				System.out.println("Quaternion[Y]: " + y);
-				System.out.println("Quaternion[Z]: " + z);
-				System.out.println("Quaternion[W]: " + w);
+				System.out.println("Quaternion [X]: " + x);
+				System.out.println("Quaternion [Y]: " + y);
+				System.out.println("Quaternion [Z]: " + z);
+				System.out.println("Quaternion [W]: " + w);
 				System.out.println("");
 			}
 		});

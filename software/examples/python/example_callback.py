@@ -10,10 +10,10 @@ from tinkerforge.brick_imu import BrickIMU
 
 # Callback function for quaternion callback
 def cb_quaternion(x, y, z, w):
-    print("Quaternion[X]: " + str(x))
-    print("Quaternion[Y]: " + str(y))
-    print("Quaternion[Z]: " + str(z))
-    print("Quaternion[W]: " + str(w))
+    print("Quaternion [X]: " + str(x))
+    print("Quaternion [Y]: " + str(y))
+    print("Quaternion [Z]: " + str(z))
+    print("Quaternion [W]: " + str(w))
     print("")
 
 if __name__ == "__main__":

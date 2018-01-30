@@ -9,10 +9,10 @@ Module ExampleCallback
     ' Callback subroutine for quaternion callback
     Sub QuaternionCB(ByVal sender As BrickIMU, ByVal x As Single, ByVal y As Single, _
                      ByVal z As Single, ByVal w As Single)
-        Console.WriteLine("Quaternion[X]: " + x.ToString())
-        Console.WriteLine("Quaternion[Y]: " + y.ToString())
-        Console.WriteLine("Quaternion[Z]: " + z.ToString())
-        Console.WriteLine("Quaternion[W]: " + w.ToString())
+        Console.WriteLine("Quaternion [X]: " + x.ToString())
+        Console.WriteLine("Quaternion [Y]: " + y.ToString())
+        Console.WriteLine("Quaternion [Z]: " + z.ToString())
+        Console.WriteLine("Quaternion [W]: " + w.ToString())
         Console.WriteLine("")
     End Sub
 

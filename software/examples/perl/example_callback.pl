@@ -12,10 +12,10 @@ sub cb_quaternion
 {
     my ($x, $y, $z, $w) = @_;
 
-    print "Quaternion[X]: $x\n";
-    print "Quaternion[Y]: $y\n";
-    print "Quaternion[Z]: $z\n";
-    print "Quaternion[W]: $w\n";
+    print "Quaternion [X]: $x\n";
+    print "Quaternion [Y]: $y\n";
+    print "Quaternion [Z]: $z\n";
+    print "Quaternion [W]: $w\n";
     print "\n";
 }
 

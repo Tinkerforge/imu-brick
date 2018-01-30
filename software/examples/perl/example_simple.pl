@@ -16,10 +16,10 @@ $ipcon->connect(&HOST, &PORT); # Connect to brickd
 # Get current quaternion
 my ($x, $y, $z, $w) = $imu->get_quaternion();
 
-print "Quaternion[X]: $x\n";
-print "Quaternion[Y]: $y\n";
-print "Quaternion[Z]: $z\n";
-print "Quaternion[W]: $w\n";
+print "Quaternion [X]: $x\n";
+print "Quaternion [Y]: $y\n";
+print "Quaternion [Z]: $z\n";
+print "Quaternion [W]: $w\n";
 
 print "Press key to exit\n";
 <STDIN>;

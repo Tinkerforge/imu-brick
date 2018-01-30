@@ -14,17 +14,14 @@ Module ExampleSimple
         ' Don't use device before ipcon is connected
 
         ' Get current quaternion
-        Dim x As Single
-        Dim y As Single
-        Dim z As Single
-        Dim w As Single
+        Dim x, y, z, w As Single
 
         imu.GetQuaternion(x, y, z, w)
 
-        Console.WriteLine("Quaternion[X]: " + x.ToString())
-        Console.WriteLine("Quaternion[Y]: " + y.ToString())
-        Console.WriteLine("Quaternion[Z]: " + z.ToString())
-        Console.WriteLine("Quaternion[W]: " + w.ToString())
+        Console.WriteLine("Quaternion [X]: " + x.ToString())
+        Console.WriteLine("Quaternion [Y]: " + y.ToString())
+        Console.WriteLine("Quaternion [Z]: " + z.ToString())
+        Console.WriteLine("Quaternion [W]: " + w.ToString())
 
         Console.WriteLine("Press key to exit")
         Console.ReadLine()

@@ -25,10 +25,10 @@ Notebook[{
    RowBox[{"imu", "@", RowBox[{"GetQuaternion", "[", RowBox[{"x", ",", "y", ",", "z", ",", "w"}], "]"}]}],
    RowBox[{"
 "}],
-   RowBox[{"Print", "[", RowBox[{"\"\<Quaternion[X]: \>\"", "<>", RowBox[{"ToString", "[", "x", "]"}]}], "]"}],
-   RowBox[{"Print", "[", RowBox[{"\"\<Quaternion[Y]: \>\"", "<>", RowBox[{"ToString", "[", "y", "]"}]}], "]"}],
-   RowBox[{"Print", "[", RowBox[{"\"\<Quaternion[Z]: \>\"", "<>", RowBox[{"ToString", "[", "z", "]"}]}], "]"}],
-   RowBox[{"Print", "[", RowBox[{"\"\<Quaternion[W]: \>\"", "<>", RowBox[{"ToString", "[", "w", "]"}]}], "]"}],
+   RowBox[{"Print", "[", RowBox[{"\"\<Quaternion [X]: \>\"", "<>", RowBox[{"ToString", "[", "x", "]"}]}], "]"}],
+   RowBox[{"Print", "[", RowBox[{"\"\<Quaternion [Y]: \>\"", "<>", RowBox[{"ToString", "[", "y", "]"}]}], "]"}],
+   RowBox[{"Print", "[", RowBox[{"\"\<Quaternion [Z]: \>\"", "<>", RowBox[{"ToString", "[", "z", "]"}]}], "]"}],
+   RowBox[{"Print", "[", RowBox[{"\"\<Quaternion [W]: \>\"", "<>", RowBox[{"ToString", "[", "w", "]"}]}], "]"}],
    RowBox[{"
 "}],
    RowBox[{"(*", "Clean up", "*)"}],

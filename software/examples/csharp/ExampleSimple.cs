@@ -19,10 +19,10 @@ class Example
 		float x, y, z, w;
 		imu.GetQuaternion(out x, out y, out z, out w);
 
-		Console.WriteLine("Quaternion[X]: " + x);
-		Console.WriteLine("Quaternion[Y]: " + y);
-		Console.WriteLine("Quaternion[Z]: " + z);
-		Console.WriteLine("Quaternion[W]: " + w);
+		Console.WriteLine("Quaternion [X]: " + x);
+		Console.WriteLine("Quaternion [Y]: " + y);
+		Console.WriteLine("Quaternion [Z]: " + z);
+		Console.WriteLine("Quaternion [W]: " + w);
 
 		Console.WriteLine("Press enter to exit");
 		Console.ReadLine();

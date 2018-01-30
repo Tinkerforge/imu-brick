@@ -30,10 +30,10 @@ int main(void) {
 		return 1;
 	}
 
-	printf("Quaternion[X]: %f\n", x);
-	printf("Quaternion[Y]: %f\n", y);
-	printf("Quaternion[Z]: %f\n", z);
-	printf("Quaternion[W]: %f\n", w);
+	printf("Quaternion [X]: %f\n", x);
+	printf("Quaternion [Y]: %f\n", y);
+	printf("Quaternion [Z]: %f\n", z);
+	printf("Quaternion [W]: %f\n", w);
 
 	printf("Press key to exit\n");
 	getchar();

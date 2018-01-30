@@ -11,10 +11,10 @@
 void cb_quaternion(float x, float y, float z, float w, void *user_data) {
 	(void)user_data; // avoid unused parameter warning
 
-	printf("Quaternion[X]: %f\n", x);
-	printf("Quaternion[Y]: %f\n", y);
-	printf("Quaternion[Z]: %f\n", z);
-	printf("Quaternion[W]: %f\n", w);
+	printf("Quaternion [X]: %f\n", x);
+	printf("Quaternion [Y]: %f\n", y);
+	printf("Quaternion [Z]: %f\n", z);
+	printf("Quaternion [W]: %f\n", w);
 	printf("\n");
 }
 

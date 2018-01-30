@@ -10,10 +10,10 @@ class Example
 	// Callback function for quaternion callback
 	static void QuaternionCB(BrickIMU sender, float x, float y, float z, float w)
 	{
-		Console.WriteLine("Quaternion[X]: " + x);
-		Console.WriteLine("Quaternion[Y]: " + y);
-		Console.WriteLine("Quaternion[Z]: " + z);
-		Console.WriteLine("Quaternion[W]: " + w);
+		Console.WriteLine("Quaternion [X]: " + x);
+		Console.WriteLine("Quaternion [Y]: " + y);
+		Console.WriteLine("Quaternion [Z]: " + z);
+		Console.WriteLine("Quaternion [W]: " + w);
 		Console.WriteLine("");
 	}
 

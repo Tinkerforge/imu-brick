@@ -50,10 +50,10 @@
                 imu.on(Tinkerforge.BrickIMU.CALLBACK_QUATERNION,
                     // Callback function for quaternion callback
                     function (x, y, z, w) {
-                        textArea.value += 'Quaternion[X]: ' + x + '\n';
-                        textArea.value += 'Quaternion[Y]: ' + y + '\n';
-                        textArea.value += 'Quaternion[Z]: ' + z + '\n';
-                        textArea.value += 'Quaternion[W]: ' + w + '\n';
+                        textArea.value += 'Quaternion [X]: ' + x + '\n';
+                        textArea.value += 'Quaternion [Y]: ' + y + '\n';
+                        textArea.value += 'Quaternion [Z]: ' + z + '\n';
+                        textArea.value += 'Quaternion [W]: ' + w + '\n';
                         textArea.value += '\n';
                         textArea.scrollTop = textArea.scrollHeight;
                     }

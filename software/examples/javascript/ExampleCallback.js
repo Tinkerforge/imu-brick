@@ -25,10 +25,10 @@ ipcon.on(Tinkerforge.IPConnection.CALLBACK_CONNECTED,
 imu.on(Tinkerforge.BrickIMU.CALLBACK_QUATERNION,
     // Callback function for quaternion callback
     function (x, y, z, w) {
-        console.log('Quaternion[X]: ' + x);
-        console.log('Quaternion[Y]: ' + y);
-        console.log('Quaternion[Z]: ' + z);
-        console.log('Quaternion[W]: ' + w);
+        console.log('Quaternion [X]: ' + x);
+        console.log('Quaternion [Y]: ' + y);
+        console.log('Quaternion [Z]: ' + z);
+        console.log('Quaternion [W]: ' + w);
         console.log();
     }
 );
