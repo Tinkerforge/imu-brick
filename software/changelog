@@ -60,10 +60,10 @@
 - Make sure to use all chunks when writing Bricklet plugin (through bricklib)
 
 2017-05-11: 2.3.3 (959840d)
-- Add support for co-mcu Bricklets
+- Add support for Co-MCU Bricklets
 
 2017-06-28: 2.3.4 (9f270d5)
-- Fix incompatibility between co-mcu support and LED Strip Bricklet (through bricklib)
+- Fix incompatibility between Co-MCU support and LED Strip Bricklet (through bricklib)
 
 2017-12-13: 2.3.5 (c4b5f3b)
 - Make sure Brick does not restart on suspend/resume (through bricklib)
@@ -73,7 +73,7 @@
 - Fix message duplication bug (through bricklib)
 
 2018-04-27: 2.3.7 (094e45b)
-- Fix potential deadlock between usb stack and comcu enumeration (through bricklib)
+- Fix potential deadlock between USB stack and Co-MCU enumeration (through bricklib)
 
 2018-07-31: 2.3.8 (13873b6)
 - Add support for Isolator Bricklet (through bricklib)
