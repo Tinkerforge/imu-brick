@@ -14,12 +14,12 @@ fn main() -> Result<(), Box<dyn Error>> {
                                           // Don't use device before ipcon is connected.
 
     // Get current quaternion.
-    let get_quaternion_result = imu.get_quaternion().recv()?;
+    let quaternion = imu.get_quaternion().recv()?;
 
-    println!("Quaternion [X]: {}", get_quaternion_result.x);
-    println!("Quaternion [Y]: {}", get_quaternion_result.y);
-    println!("Quaternion [Z]: {}", get_quaternion_result.z);
-    println!("Quaternion [W]: {}", get_quaternion_result.w);
+    println!("Quaternion [X]: {}", quaternion.x);
+    println!("Quaternion [Y]: {}", quaternion.y);
+    println!("Quaternion [Z]: {}", quaternion.z);
+    println!("Quaternion [W]: {}", quaternion.w);
 
     println!("Press enter to exit.");
     let mut _input = String::new();
