@@ -1,0 +1,8 @@
+
+
+# Change XXYYZZ to the UID of your IMU Brick
+
+setup:
+	# Get current quaternion
+	subscribe to tinkerforge/response/imu/XXYYZZ/get_quaternion
+	publish '' to tinkerforge/request/imu_brick/XXYYZZ/get_quaternion 
